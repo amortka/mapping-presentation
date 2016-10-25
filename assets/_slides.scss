@@ -1,7 +1,79 @@
 .reveal {
     #slide-01 {}
-
     #slide-02 {
+        height: 100%;
+        width: 100%;
+        .story {
+            position: absolute;
+            min-width: 30px;
+            min-height: 30px;
+        }
+        .story-01 {
+            width: 300px;
+            left: 10%;
+            top: 10%;
+        }
+        .story-02 {
+            width: 300px;
+            left: 20%;
+            top: 60%;
+        }
+        .story-03 {
+            width: 300px;
+            left: 50%;
+            top: 0;
+        }
+        .story-04 {
+            width: 300px;
+            left: 65%;
+            top: 40%;
+        }
+    }
+    #slide-03 {
+        height: 100%;
+        width: 100%;
+        .map-left,
+        .map-right {
+            position: absolute;
+            top: 15%;
+            height: 50%;
+        }
+        .map-left {
+            left: 5%;
+        }
+        .map-right {
+            left: 60%;
+        }
+        .map-arrow {
+            position: absolute;
+            top: 35%;
+            left: 45%;
+            height: 10%;
+        }
+    }
+
+    #slide-04 {
+        height: 100%;
+        width: 100%;
+
+        .alternatives {
+          position: absolute;
+          width: 50%;
+          &:nth-of-type(1) {
+            top: 10%; left: 0%;
+          }
+          &:nth-of-type(2) {
+            top: 25%; right: 0%;
+          }
+          &:nth-of-type(3) {
+            top: 50%; left: 0%;
+          }
+          &:nth-of-type(4) {
+            bottom: 0%; right: 5%;
+          }
+        }
+    }
+    /*#slide-02 {
         .layer {
             //display: none;
         }
@@ -20,7 +92,7 @@
     #slide-03 {
       height: 100%;
       width: 100%;
-    }
+    }*/
 }
 /* -----------------------------------------------------------------------------
    --- utils
@@ -29,15 +101,12 @@
     .text-left {
         text-align: left;
     }
-
     .text-center {
         text-align: center;
     }
-
     .text-right {
         text-align: right;
     }
-
     .text-light,
     h1.text-light,
     h2.text-light,

@@ -26,46 +26,114 @@
 <body>
 	<div class="reveal">
 		<div class="slides">
+
+			<!--  slide 01  ----------------------------------------------------->
 			<section id="slide-01">
 				<h1 class="text-left">Have you ever wanted to have your own google maps?</h1>
 				<h3 class="text-left text-light">from idea to tileserver</h3>
 			</section>
+
 			<section id="slide-02">
+				<img src="assets/story-1.jpg" class="fragment grow story story-01"/>
+				<img src="assets/story-2.jpg" class="fragment grow story story-02"/>
+				<img src="assets/story-3.png" class="fragment grow story story-03"/>
+				<img src="assets/story-4.jpg" class="fragment grow story story-04"/>
+			</section>
+
+			<section id="slide-03">
+					<h3>openstreetmap data to tileserver</h3>
+					<img src="assets/openstreetmap-wroclaw.png" class="map-left"/>
+					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="map-arrow" preserveAspectRatio="none" viewBox="0 0 70 70">
+						<polygon points="0,21 35,21 35,0 70,35 35,70 35,49 0,49" class="shape-element" fill="#ecf0f1"></polygon>
+					</svg>
+					<img src="assets/monomap-wroclaw.png" class="map-right"/>
+			</section>
+
+			<section id="slide-04">
+					<h3>Alternatives</h3>
+					<img src="assets/alternatives-mapbox.png" class="alternatives"/>
+					<img src="assets/alternative-snazzy-maps.png" class="alternatives"/>
+					<img src="assets/alternative-stamen.png" class="alternatives"/>
+					<img src="assets/alternative-stamen2.png" class="alternatives"/>
+			</section>
+
+			<section id="slide-05">
+				<h1>Basics</h1>
+				<h2>geo projection</h2>
+				<h2>geojson</h2>
+				<h2>d3.js</h2>
+				<h2>tilenames</h2>
+				<h2>geo formats</h2>
+			</section>
+
+
+			<section id="slide-0todo">
+				<table>
+					<thead>
+						<tr>
+							<th>col1</th>
+							<th>col2</th>
+							<th>col3</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<!--  slide 00  ----------------------------------------------------->
+
+			<section id="slide-0000">
 				<h2>simple d3.js bar chart</h2>
 				<svg id="slide-d3-02-01"></svg>
 				<pre><code data-trim data-noescape>
 var data = [4, 8, 15, 16, 23, 42];
 
 var width = 500,
-    barHeight = 30;
+	barHeight = 30;
 
 var x = d3.scaleLinear()
-    .domain([0, d3.max(data)])
-    .range([0, width]);
+	.domain([0, d3.max(data)])
+	.range([0, width]);
 
 var chart = d3.select("#slide-d3-02-01")
-    .attr("width", width)
-    .attr("height", barHeight * data.length);
+	.attr("width", width)
+	.attr("height", barHeight * data.length);
 
 var bar = chart.selectAll("g")
-    .data(data)
-  	.enter()
-		.append("g")
-    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+	.data(data)
+	.enter()
+	.append("g")
+	.attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
 
 bar.append("rect")
-    .attr("width", x)
-    .attr("height", barHeight - 1);
+	.attr("width", x)
+	.attr("height", barHeight - 1);
 
 bar.append("text")
-    .attr("x", function(d) { return x(d) - 3; })
-    .attr("y", barHeight / 2)
-    .attr("dy", ".35em")
-    .text(function(d) { return d; });
-				</code></pre>
+	.attr("x", function(d) { return x(d) - 3; })
+	.attr("y", barHeight / 2)
+	.attr("dy", ".35em")
+	.text(function(d) { return d; });
+</code></pre>
 
 			</section>
-			<section id="slide-03">
+			<section id="slide-000003">
 			</section>
 
 			<section>
@@ -96,7 +164,11 @@ bar.append("text")
 
 			// More info https://github.com/hakimel/reveal.js#dependencies
 			dependencies: [{
-				src: 'plugin/markdown/marked.js'
+				src: 'socket.io/socket.io.js', async: true
+			}, {
+				src: 'plugin/notes-server/client.js', async: true
+			}, {
+    			src: 'plugin/markdown/marked.js'
 			}, {
 				src: 'plugin/markdown/markdown.js'
 			}, {
@@ -124,10 +196,10 @@ bar.append("text")
 
 			switch (fnIdx) {
 				case '2_1':
-					appendScript('slide-2-1.js');
+					// appendScript('slide-2-1.js');
 					break;
 				case '3_1':
-					appendScript('monomap-infinity.js');
+					// appendScript('monomap-infinity.js');
 					break;
 				default:
 					console.log('no fn found');

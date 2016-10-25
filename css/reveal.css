@@ -1329,14 +1329,85 @@ html:-moz-full-screen-ancestor {
 .zoomed .reveal .roll span:after {
   visibility: hidden; }
 
-.reveal #slide-02 svg text {
-  fill: white;
-  font: 10px sans-serif;
-  text-anchor: end; }
+.reveal {
+  /*#slide-02 {
+        .layer {
+            //display: none;
+        }
 
-.reveal #slide-03 {
-  height: 100%;
-  width: 100%; }
+        svg rect {
+        //    fill: steelblue;
+        }
+
+        svg text {
+            fill: white;
+            font: 10px sans-serif;
+            text-anchor: end;
+        }
+    }
+
+    #slide-03 {
+      height: 100%;
+      width: 100%;
+    }*/ }
+  .reveal #slide-02 {
+    height: 100%;
+    width: 100%; }
+    .reveal #slide-02 .story {
+      position: absolute;
+      min-width: 30px;
+      min-height: 30px; }
+    .reveal #slide-02 .story-01 {
+      width: 300px;
+      left: 10%;
+      top: 10%; }
+    .reveal #slide-02 .story-02 {
+      width: 300px;
+      left: 20%;
+      top: 60%; }
+    .reveal #slide-02 .story-03 {
+      width: 300px;
+      left: 50%;
+      top: 0; }
+    .reveal #slide-02 .story-04 {
+      width: 300px;
+      left: 65%;
+      top: 40%; }
+  .reveal #slide-03 {
+    height: 100%;
+    width: 100%; }
+    .reveal #slide-03 .map-left,
+    .reveal #slide-03 .map-right {
+      position: absolute;
+      top: 15%;
+      height: 50%; }
+    .reveal #slide-03 .map-left {
+      left: 5%; }
+    .reveal #slide-03 .map-right {
+      left: 60%; }
+    .reveal #slide-03 .map-arrow {
+      position: absolute;
+      top: 35%;
+      left: 45%;
+      height: 10%; }
+  .reveal #slide-04 {
+    height: 100%;
+    width: 100%; }
+    .reveal #slide-04 .alternatives {
+      position: absolute;
+      width: 50%; }
+      .reveal #slide-04 .alternatives:nth-of-type(1) {
+        top: 10%;
+        left: 0%; }
+      .reveal #slide-04 .alternatives:nth-of-type(2) {
+        top: 25%;
+        right: 0%; }
+      .reveal #slide-04 .alternatives:nth-of-type(3) {
+        top: 50%;
+        left: 0%; }
+      .reveal #slide-04 .alternatives:nth-of-type(4) {
+        bottom: 0%;
+        right: 5%; }
 
 /* -----------------------------------------------------------------------------
    --- utils
