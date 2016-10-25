@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/monomap.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section id="slide-01">
+				<h1 class="text-left">Have you ever wanted to have your own google maps?</h1>
+				<h3 class="text-left text-light">from idea to tileserver</h3>
+			</section>
+			<section id="slide-02">
+				<h2>simple d3.js bar chart</h2>
+				<svg id="slide-d3-02-01"></svg>
+				<pre><code data-trim data-noescape>
+var data = [4, 8, 15, 16, 23, 42];
+
+var width = 500,
+    barHeight = 30;
+
+var x = d3.scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([0, width]);
+
+var chart = d3.select("#slide-d3-02-01")
+    .attr("width", width)
+    .attr("height", barHeight * data.length);
+
+var bar = chart.selectAll("g")
+    .data(data)
+  	.enter()
+		.append("g")
+    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+bar.append("rect")
+    .attr("width", x)
+    .attr("height", barHeight - 1);
+
+bar.append("text")
+    .attr("x", function(d) { return x(d) - 3; })
+    .attr("y", barHeight / 2)
+    .attr("dy", ".35em")
+    .text(function(d) { return d; });
+				</code></pre>
+
+			</section>
+			<section id="slide-03">
+			</section>
+
+			<section>
+				<p class="fragment layer" data-layer="layer-1">frag 1</p>
+				<p class="fragment layer" data-layer="layer-2">frag 2</p>
+				<p class="fragment layer" data-layer="layer-3">frag 3</p>
+				<p class="fragment layer" data-layer="layer-4">frag 4</p>
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+	<script src="assets/d3.min.js"></script>
+	<script src="assets/d3-selection-multi.v1.min.js"></script>
+	<script src="assets/lodash.min.js"></script>
+	<script src="assets/monomap.js"></script>
+
+	<script>
+		// More info https://github.com/hakimel/reveal.js#configuration
+		Reveal.initialize({
+			history: true,
+			progress: false,
+			parallaxBackgroundImage: 'assets/background-big.png',
+			parallaxBackgroundSize: '3000px 1500px',
+			// parallaxBackgroundHorizontal: 100,
+			// parallaxBackgroundVertical: 100,
+
+			// More info https://github.com/hakimel/reveal.js#dependencies
+			dependencies: [{
+				src: 'plugin/markdown/marked.js'
+			}, {
+				src: 'plugin/markdown/markdown.js'
+			}, {
+				src: 'plugin/notes/notes.js',
+				async: true
+			}, {
+				src: 'plugin/highlight/highlight.js',
+				async: true,
+				callback: function() {
+					hljs.initHighlightingOnLoad();
+				}
+			}]
+		});
+
+		Reveal.addEventListener('fragmentshown', function(ev) {
+			console.log('fragmentshown', ev);
+			if (ev.fragment.dataset) {
+				//console.log(JSON.stringify(ev.fragment.dataset, false, 2));
+			}
+		});
+
+		Reveal.addEventListener('slidechanged', function(event) {
+			// console.log('slidechanged', event.previousSlide, event.currentSlide, event.indexh, event.indexv);
+			var fnIdx = (event.indexh + 1) + '_' + (event.indexv + 1);
+
+			switch (fnIdx) {
+				case '2_1':
+					appendScript('slide-2-1.js');
+					break;
+				case '3_1':
+					appendScript('monomap-infinity.js');
+					break;
+				default:
+					console.log('no fn found');
+					break;
+			}
+		});
+
+		function appendScript(fileName) {
+			var scriptElements = document.getElementsByTagName('script');
+
+			if (!_.find(scriptElements, function(script) {
+					return !!~script.src.indexOf(fileName);
+			})) {
+				var scriptEl = document.createElement('script');
+				scriptEl.setAttribute('src', 'assets/' + fileName);
+				document.body.appendChild(scriptEl);
+			}
+		}
+	</script>
+</body>
+
+</html>

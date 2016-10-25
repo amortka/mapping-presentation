@@ -1,0 +1,50 @@
+.reveal {
+    #slide-01 {}
+
+    #slide-02 {
+        .layer {
+            //display: none;
+        }
+
+        svg rect {
+        //    fill: steelblue;
+        }
+
+        svg text {
+            fill: white;
+            font: 10px sans-serif;
+            text-anchor: end;
+        }
+    }
+
+    #slide-03 {
+      height: 100%;
+      width: 100%;
+    }
+}
+/* -----------------------------------------------------------------------------
+   --- utils
+   ---------------------------------------------------------------------------*/
+.reveal {
+    .text-left {
+        text-align: left;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-light,
+    h1.text-light,
+    h2.text-light,
+    h3.text-light,
+    h4.text-light,
+    h5.text-light,
+    h6.text-light {
+        font-weight: 200;
+    }
+}
