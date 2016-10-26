@@ -1329,85 +1329,106 @@ html:-moz-full-screen-ancestor {
 .zoomed .reveal .roll span:after {
   visibility: hidden; }
 
-.reveal {
-  /*#slide-02 {
-        .layer {
-            //display: none;
-        }
+.reveal section {
+  height: 100%;
+  width: 100%; }
 
-        svg rect {
-        //    fill: steelblue;
-        }
+.reveal section#slide-story img.story {
+  position: absolute;
+  min-width: 30px;
+  min-height: 30px; }
 
-        svg text {
-            fill: white;
-            font: 10px sans-serif;
-            text-anchor: end;
-        }
-    }
+.reveal section#slide-story img.story-01 {
+  width: 300px;
+  left: 10%;
+  top: 10%; }
 
-    #slide-03 {
-      height: 100%;
-      width: 100%;
-    }*/ }
-  .reveal #slide-02 {
-    height: 100%;
-    width: 100%; }
-    .reveal #slide-02 .story {
-      position: absolute;
-      min-width: 30px;
-      min-height: 30px; }
-    .reveal #slide-02 .story-01 {
-      width: 300px;
-      left: 10%;
-      top: 10%; }
-    .reveal #slide-02 .story-02 {
-      width: 300px;
-      left: 20%;
-      top: 60%; }
-    .reveal #slide-02 .story-03 {
-      width: 300px;
-      left: 50%;
-      top: 0; }
-    .reveal #slide-02 .story-04 {
-      width: 300px;
-      left: 65%;
-      top: 40%; }
-  .reveal #slide-03 {
-    height: 100%;
-    width: 100%; }
-    .reveal #slide-03 .map-left,
-    .reveal #slide-03 .map-right {
-      position: absolute;
-      top: 15%;
-      height: 50%; }
-    .reveal #slide-03 .map-left {
-      left: 5%; }
-    .reveal #slide-03 .map-right {
-      left: 60%; }
-    .reveal #slide-03 .map-arrow {
-      position: absolute;
-      top: 35%;
-      left: 45%;
-      height: 10%; }
-  .reveal #slide-04 {
-    height: 100%;
-    width: 100%; }
-    .reveal #slide-04 .alternatives {
-      position: absolute;
-      width: 50%; }
-      .reveal #slide-04 .alternatives:nth-of-type(1) {
-        top: 10%;
-        left: 0%; }
-      .reveal #slide-04 .alternatives:nth-of-type(2) {
-        top: 25%;
-        right: 0%; }
-      .reveal #slide-04 .alternatives:nth-of-type(3) {
-        top: 50%;
-        left: 0%; }
-      .reveal #slide-04 .alternatives:nth-of-type(4) {
-        bottom: 0%;
-        right: 5%; }
+.reveal section#slide-story img.story-02 {
+  width: 300px;
+  left: 20%;
+  top: 60%; }
+
+.reveal section#slide-story img.story-03 {
+  width: 300px;
+  left: 50%;
+  top: 0; }
+
+.reveal section#slide-story img.story-04 {
+  width: 300px;
+  left: 65%;
+  top: 40%; }
+
+.reveal #slide-story-osm2tileserver .map-left,
+.reveal #slide-story-osm2tileserver .map-right {
+  position: absolute;
+  top: 15%;
+  height: 50%; }
+
+.reveal #slide-story-osm2tileserver .map-left {
+  left: 5%; }
+
+.reveal #slide-story-osm2tileserver .map-right {
+  left: 60%; }
+
+.reveal #slide-story-osm2tileserver .map-arrow {
+  position: absolute;
+  top: 35%;
+  left: 45%;
+  height: 10%; }
+
+.reveal #slide-04 .alternatives {
+  position: absolute;
+  width: 50%; }
+  .reveal #slide-04 .alternatives:nth-of-type(1) {
+    top: 10%;
+    left: 0; }
+  .reveal #slide-04 .alternatives:nth-of-type(2) {
+    top: 25%;
+    right: 0; }
+  .reveal #slide-04 .alternatives:nth-of-type(3) {
+    top: 50%;
+    left: 0; }
+  .reveal #slide-04 .alternatives:nth-of-type(4) {
+    bottom: 0;
+    right: 5%; }
+
+.reveal #slide-projections-transform #projection-menu {
+  position: absolute;
+  right: 10px;
+  top: 10px; }
+
+.reveal #slide-projections-transform .stroke {
+  fill: none;
+  stroke: #000;
+  stroke-width: 3px; }
+
+.reveal #slide-projections-transform .fill {
+  fill: #fff; }
+
+.reveal #slide-projections-transform .graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: 0.5px;
+  stroke-opacity: 0.5; }
+
+.reveal #slide-projections-transform .land {
+  fill: #222; }
+
+.reveal #slide-projections-transform .boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.5px; }
+
+.reveal #slide-projections-mercator {
+  position: relative; }
+  .reveal #slide-projections-mercator ol {
+    font-size: 0.8em;
+    display: inline-block;
+    width: 45%;
+    left: 0; }
+  .reveal #slide-projections-mercator img {
+    width: 45%;
+    left: 0; }
 
 /* -----------------------------------------------------------------------------
    --- utils

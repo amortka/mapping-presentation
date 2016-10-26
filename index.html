@@ -27,34 +27,190 @@
 	<div class="reveal">
 		<div class="slides">
 
-			<!--  slide 01  ----------------------------------------------------->
-			<section id="slide-01">
+			<section>
 				<h1 class="text-left">Have you ever wanted to have your own google maps?</h1>
 				<h3 class="text-left text-light">from idea to tileserver</h3>
 			</section>
 
-			<section id="slide-02">
-				<img src="assets/story-1.jpg" class="fragment grow story story-01"/>
-				<img src="assets/story-2.jpg" class="fragment grow story story-02"/>
-				<img src="assets/story-3.png" class="fragment grow story story-03"/>
-				<img src="assets/story-4.jpg" class="fragment grow story story-04"/>
-			</section>
-
-			<section id="slide-03">
+			<section>
+				<section id="slide-story">
+					<img src="assets/story-1.jpg" class="story story-01" />
+					<img src="assets/story-2.jpg" class="story story-02" />
+					<img src="assets/story-3.png" class="story story-03" />
+					<img src="assets/story-4.jpg" class="story story-04" />
+				</section>
+				<section id="slide-story-osm2tileserver">
 					<h3>openstreetmap data to tileserver</h3>
-					<img src="assets/openstreetmap-wroclaw.png" class="map-left"/>
+					<img src="assets/openstreetmap-wroclaw.png" class="map-left" />
 					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="map-arrow" preserveAspectRatio="none" viewBox="0 0 70 70">
 						<polygon points="0,21 35,21 35,0 70,35 35,70 35,49 0,49" class="shape-element" fill="#ecf0f1"></polygon>
 					</svg>
-					<img src="assets/monomap-wroclaw.png" class="map-right"/>
+					<img src="assets/monomap-wroclaw.png" class="map-right" />
+				</section>
 			</section>
 
+			<section id="slide-basics">
+				<h1>Basics</h1>
+				<ul>
+					<li>geo projection
+					<li>gejson format</li>
+					<li>d3.js + leaflet</li>
+					<li>tilenames</li>
+					<li>geo formats, data</li>
+				</ul>
+			</section>
+
+			<section id="slide-projections">
+				<section id="slide-projections-transform">
+					<h1>geo projections</h1>
+				</section>
+				<section id="slide-projections-mercator">
+					<h1>mercator projection</h1>
+					<h3>srs code EPSG:3857</h3>
+					<ol>
+						<li>
+							<p>Scale is the same in all directions.</p>
+							<small>(A mile along a road should look the same length no matter which way the road is facing.)</small>
+						</li>
+						<li>
+							<p>Angles are depicted accurately.</p>
+							<small>(If the map directs me to make what looks like a 90° left turn, or to bear right 30°, then that’s what I actually do.)</small>
+						</li>
+						<li><p>A small real-life circle like the should be shown as a circle on the map, not squashed into an ellipse.</p></li>
+						<li><p>By convention, north should always point straight up.</p></li>
+					</ol>
+					<img src="assets/Tissot_mercator.png" />
+				</section>
+			</section>
+
+			<section id="slide-geojson">
+				<section id="slide-geojson-format">
+					<h1>geojson format</h1>
+					<code>Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon</code>
+<pre><code>
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [102.0, 0.5]
+        },
+        "properties": {
+            "prop0": "value0"
+        }
+    }, {
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [102.0, 0.0],
+                [103.0, 1.0],
+                [104.0, 0.0],
+                [105.0, 1.0]
+            ]
+        },
+        "properties": {
+            "prop0": "value0",
+            "prop1": 0.0
+        }
+    }, {
+        "type": "Feature",
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [100.0, 0.0],
+                    [101.0, 0.0],
+                    [101.0, 1.0],
+                    [100.0, 1.0],
+                    [100.0, 0.0]
+                ]
+            ]
+        },
+        "properties": {
+            "prop0": "value0",
+            "prop1": {
+                "this": "that"
+            }
+        }
+    }]
+}
+</pre></code>
+				<small><a href="http://geojson.org/geojson-spec.html#introduction">http://geojson.org/geojson-spec.html#introduction</a></small>
+				</section>
+					<section id="slide-geojson-tools-github">
+						<h1>how to get data?</h1>
+						<p>github.com</p>
+						<img src="assets/geojson-poland.png" />
+					</section>
+					<section id="slide-geojson-tools-naturalearthdata">
+						<p>naturalearthdata.com</p>
+						<img src="assets/natural-data-sshot.png" />
+					</section>
+					<section id="slide-geojson-tools-geojson-maps">
+						<p>geojson-maps.kyd.com.au</p>
+						<img src="assets/natural-data-sshot.png" />
+					</section>
+					<section id="slide-geojson-tools-geojson-maps">
+						<h1>validate and explore your data</h1>
+						<p>geojsonlint.com</p>
+						<img src="assets/geoslint.png" />
+					</section>
+					<section id="slide-geojson-tools-geojson-maps">
+						<p>geojson.io</p>
+						<img src="assets/geojsonio.png" />
+					</section>
+			</section>
+
+			<section id="slide-07">
+				<h1>@TODO: mapping with d3.</h1>
+			</section>
+
+			<section id="slide-08">
+				<h1>@TODO: tilenames</h1>
+			</section>
+
+			<section id="slide-08">
+				<h1>@TODO: spatial data formats</h1>
+			</section>
+
+			<section id="mapnik-09">
+				<h1>@TODO: mapnik</h1>
+			</section>
+
+			<section id="mapnik-10">
+				<h1>@TODO: first map with mapnik</h1>
+			</section>
+
+			<section id="mapnik-11">
+				<section id="mapnik-11-01">
+					<h1>@TODO: mapnik styling</h1>
+				</section>
+				<section id="mapnik-11-02">
+					<h1>@TODO: mapnik mcss -> xml</h1>
+				</section>
+			</section>
+
+			<section id="slide-12">
+				<h1>@TODO: import data to postgresql</h1>
+			</section>
+
+			<section id="slide-13">
+				<h1>@TODO: run tileserver!</h1>
+			</section>
+
+			<section id="slide-14">
+				<h1>@TODO: architecture overview</h1>
+			</section>
+
+			<!--
 			<section id="slide-04">
-					<h3>Alternatives</h3>
-					<img src="assets/alternatives-mapbox.png" class="alternatives"/>
-					<img src="assets/alternative-snazzy-maps.png" class="alternatives"/>
-					<img src="assets/alternative-stamen.png" class="alternatives"/>
-					<img src="assets/alternative-stamen2.png" class="alternatives"/>
+				<h3>Alternatives</h3>
+				<img src="assets/alternatives-mapbox.png" class="alternatives" />
+				<img src="assets/alternative-snazzy-maps.png" class="alternatives" />
+				<img src="assets/alternative-stamen.png" class="alternatives" />
+				<img src="assets/alternative-stamen2.png" class="alternatives" />
 			</section>
 
 			<section id="slide-05">
@@ -95,8 +251,6 @@
 					</tbody>
 				</table>
 			</section>
-
-			<!--  slide 00  ----------------------------------------------------->
 
 			<section id="slide-0000">
 				<h2>simple d3.js bar chart</h2>
@@ -142,15 +296,18 @@ bar.append("text")
 				<p class="fragment layer" data-layer="layer-3">frag 3</p>
 				<p class="fragment layer" data-layer="layer-4">frag 4</p>
 			</section>
+		-->
 		</div>
 	</div>
 
 	<script src="lib/js/head.min.js"></script>
 	<script src="js/reveal.js"></script>
-	<script src="assets/d3.min.js"></script>
-	<script src="assets/d3-selection-multi.v1.min.js"></script>
 	<script src="assets/lodash.min.js"></script>
-	<script src="assets/monomap.js"></script>
+	<script src="assets/d3.v3.min.js"></script>
+	<script src="assets/d3-selection-multi.v1.min.js"></script>
+	<script src="assets/d3.geo.projection.v0.min.js"></script>
+	<script src="assets/topojson.v1.min.js"></script>
+	<!-- <script src="assets/monomap.js"></script> -->
 
 	<script>
 		// More info https://github.com/hakimel/reveal.js#configuration
@@ -163,12 +320,14 @@ bar.append("text")
 			// parallaxBackgroundVertical: 100,
 
 			// More info https://github.com/hakimel/reveal.js#dependencies
-			dependencies: [{
-				src: 'socket.io/socket.io.js', async: true
+			dependencies: [/*{
+				src: 'socket.io/socket.io.js',
+				async: true
 			}, {
-				src: 'plugin/notes-server/client.js', async: true
-			}, {
-    			src: 'plugin/markdown/marked.js'
+				src: 'plugin/notes-server/client.js',
+				async: true
+			}, */{
+				src: 'plugin/markdown/marked.js'
 			}, {
 				src: 'plugin/markdown/markdown.js'
 			}, {
@@ -192,11 +351,16 @@ bar.append("text")
 
 		Reveal.addEventListener('slidechanged', function(event) {
 			// console.log('slidechanged', event.previousSlide, event.currentSlide, event.indexh, event.indexv);
-			var fnIdx = (event.indexh + 1) + '_' + (event.indexv + 1);
+			var nextId = event.currentSlide.id;
+			var prevId = event.previousSlide ? event.previousSlide.id : null;
 
-			switch (fnIdx) {
-				case '2_1':
-					// appendScript('slide-2-1.js');
+			console.log('event.currentSlide', nextId);
+			console.log('event.previousSlide', prevId);
+
+			// Add scripts when enter slide
+			switch (nextId) {
+				case 'slide-projections-transform':
+					appendScript('slide-projections-transform.js');
 					break;
 				case '3_1':
 					// appendScript('monomap-infinity.js');
@@ -205,6 +369,7 @@ bar.append("text")
 					console.log('no fn found');
 					break;
 			}
+
 		});
 
 		function appendScript(fileName) {
@@ -212,7 +377,7 @@ bar.append("text")
 
 			if (!_.find(scriptElements, function(script) {
 					return !!~script.src.indexOf(fileName);
-			})) {
+				})) {
 				var scriptEl = document.createElement('script');
 				scriptEl.setAttribute('src', 'assets/' + fileName);
 				document.body.appendChild(scriptEl);
