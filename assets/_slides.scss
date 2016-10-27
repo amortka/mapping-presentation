@@ -1,140 +1,171 @@
 .reveal {
-    section {
-        height: 100%;
-        width: 100%;
+  section {
+    height: 100%;
+    width: 100%;
+  }
+  section#slide-story {
+    img.story {
+      position: absolute;
+      min-width: 30px;
+      min-height: 30px;
     }
-    section#slide-story {
-        img.story {
-            position: absolute;
-            min-width: 30px;
-            min-height: 30px;
-        }
-        img.story-01 {
-            width: 300px;
-            left: 10%;
-            top: 10%;
-        }
-        img.story-02 {
-            width: 300px;
-            left: 20%;
-            top: 60%;
-        }
-        img.story-03 {
-            width: 300px;
-            left: 50%;
-            top: 0;
-        }
-        img.story-04 {
-            width: 300px;
-            left: 65%;
-            top: 40%;
-        }
+    img.story-01 {
+      width: 300px;
+      left: 10%;
+      top: 10%;
     }
-    #slide-story-osm2tileserver {
-        .map-left,
-        .map-right {
-            position: absolute;
-            top: 15%;
-            height: 50%;
-        }
-        .map-left {
-            left: 5%;
-        }
-        .map-right {
-            left: 60%;
-        }
-        .map-arrow {
-            position: absolute;
-            top: 35%;
-            left: 45%;
-            height: 10%;
-        }
+    img.story-02 {
+      width: 300px;
+      left: 20%;
+      top: 60%;
     }
-    #slide-04 {
-        .alternatives {
-            position: absolute;
-            width: 50%;
-            &:nth-of-type(1) {
-                top: 10%;
-                left: 0;
-            }
-            &:nth-of-type(2) {
-                top: 25%;
-                right: 0;
-            }
-            &:nth-of-type(3) {
-                top: 50%;
-                left: 0;
-            }
-            &:nth-of-type(4) {
-                bottom: 0;
-                right: 5%;
-            }
-        }
+    img.story-03 {
+      width: 300px;
+      left: 50%;
+      top: 0;
     }
-    #slide-projections-transform {
-        #projection-menu {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-        }
-        .stroke {
-            fill: none;
-            stroke: #000;
-            stroke-width: 3px;
-        }
-        .fill {
-            fill: #fff;
-        }
-        .graticule {
-            fill: none;
-            stroke: #777;
-            stroke-width: 0.5px;
-            stroke-opacity: 0.5;
-        }
-        .land {
-            fill: #222;
-        }
-        .boundary {
-            fill: none;
-            stroke: #fff;
-            stroke-width: 0.5px;
-        }
+    img.story-04 {
+      width: 300px;
+      left: 65%;
+      top: 40%;
     }
-    #slide-projections-mercator {
-      position: relative;
-      ol {
-        font-size: 0.8em;
-        display: inline-block;
-        width: 45%;
+  }
+  #slide-story-osm2tileserver {
+    .map-left,
+    .map-right {
+      position: absolute;
+      top: 15%;
+      height: 50%;
+    }
+    .map-left {
+      left: 5%;
+    }
+    .map-right {
+      left: 60%;
+    }
+    .map-arrow {
+      position: absolute;
+      top: 35%;
+      left: 45%;
+      height: 10%;
+    }
+  }
+  #slide-04 {
+    .alternatives {
+      position: absolute;
+      width: 50%;
+      &:nth-of-type(1) {
+        top: 10%;
         left: 0;
       }
-      img {
-        width: 45%;
+      &:nth-of-type(2) {
+        top: 25%;
+        right: 0;
+      }
+      &:nth-of-type(3) {
+        top: 50%;
         left: 0;
       }
+      &:nth-of-type(4) {
+        bottom: 0;
+        right: 5%;
+      }
     }
+  }
+  #slide-projections-transform {
+    #projection-menu {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    .stroke {
+      fill: none;
+      stroke: #000;
+      stroke-width: 3px;
+    }
+    .fill {
+      fill: #fff;
+    }
+    .graticule {
+      fill: none;
+      stroke: #777;
+      stroke-width: 0.5px;
+      stroke-opacity: 0.5;
+    }
+    .land {
+      fill: #222;
+    }
+    .boundary {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 0.5px;
+    }
+  }
+  #slide-projections-mercator {
+    position: relative;
+    ol {
+      font-size: 0.8em;
+      display: inline-block;
+      width: 45%;
+      left: 0;
+    }
+    img {
+      width: 45%;
+      left: 0;
+    }
+  }
+
+  #slide-d3-mapping {
+    pre {
+      width: 100%;
+      code {
+        height: 200px;
+        transition: height 0.5s ease-out;
+        &:active, &:focus, &:hover {
+          height: 500px;
+        }
+      }
+    }
+
+    .states {
+      fill: none;
+      stroke: #fff;
+      stroke-linejoin: round;
+    }
+
+
+  }
 }
+
+.tooltip {
+  background: #FFF;
+  color: #2c3e50;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-weight: 700;
+  padding: 0.2em;
+  border-radius: 0.2em;
+}
+
 /* -----------------------------------------------------------------------------
    --- utils
    ---------------------------------------------------------------------------*/
 .reveal {
-    .text-left {
-        text-align: left;
-    }
-    .text-center {
-        text-align: center;
-    }
-    .text-right {
-        text-align: right;
-    }
-    .text-light,
-    h1.text-light,
-    h2.text-light,
-    h3.text-light,
-    h4.text-light,
-    h5.text-light,
-    h6.text-light {
-        font-weight: 200;
-    }
+  .text-left {
+    text-align: left;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .text-light,
+  h1.text-light,
+  h2.text-light,
+  h3.text-light,
+  h4.text-light,
+  h5.text-light,
+  h6.text-light {
+    font-weight: 200;
+  }
 }

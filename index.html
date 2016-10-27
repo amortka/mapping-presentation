@@ -34,18 +34,18 @@
 
 			<section>
 				<section id="slide-story">
-					<img src="assets/story-1.jpg" class="story story-01" />
-					<img src="assets/story-2.jpg" class="story story-02" />
-					<img src="assets/story-3.png" class="story story-03" />
-					<img src="assets/story-4.jpg" class="story story-04" />
+					<img src="assets/images/story-1.jpg" class="story story-01" />
+					<img src="assets/images/story-2.jpg" class="story story-02" />
+					<img src="assets/images/story-3.png" class="story story-03" />
+					<img src="assets/images/story-4.jpg" class="story story-04" />
 				</section>
 				<section id="slide-story-osm2tileserver">
 					<h3>openstreetmap data to tileserver</h3>
-					<img src="assets/openstreetmap-wroclaw.png" class="map-left" />
+					<img src="assets/images/openstreetmap-wroclaw.png" class="map-left" />
 					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="map-arrow" preserveAspectRatio="none" viewBox="0 0 70 70">
 						<polygon points="0,21 35,21 35,0 70,35 35,70 35,49 0,49" class="shape-element" fill="#ecf0f1"></polygon>
 					</svg>
-					<img src="assets/monomap-wroclaw.png" class="map-right" />
+					<img src="assets/images/monomap-wroclaw.png" class="map-right" />
 				</section>
 			</section>
 
@@ -142,31 +142,130 @@
 					<section id="slide-geojson-tools-github">
 						<h1>how to get data?</h1>
 						<p>github.com</p>
-						<img src="assets/geojson-poland.png" />
+						<img src="assets/images/geojson-poland.png" />
 					</section>
 					<section id="slide-geojson-tools-naturalearthdata">
 						<p>naturalearthdata.com</p>
-						<img src="assets/natural-data-sshot.png" />
+						<img src="assets/images/natural-data-sshot.png" />
 					</section>
 					<section id="slide-geojson-tools-geojson-maps">
 						<p>geojson-maps.kyd.com.au</p>
-						<img src="assets/natural-data-sshot.png" />
+						<img src="assets/images/natural-data-sshot.png" />
 					</section>
 					<section id="slide-geojson-tools-geojson-maps">
 						<h1>validate and explore your data</h1>
 						<p>geojsonlint.com</p>
-						<img src="assets/geoslint.png" />
+						<img src="assets/images/geoslint.png" />
 					</section>
 					<section id="slide-geojson-tools-geojson-maps">
 						<p>geojson.io</p>
-						<img src="assets/geojsonio.png" />
+						<img src="assets/images/geojsonio.png" />
 					</section>
 			</section>
 
-			<section id="slide-07">
-				<h1>@TODO: mapping with d3.</h1>
+			<section id="slide-d3-mapping">
+				<section id="slide-d3-firstmap">
+					<h1>First map</h1>
+<pre><code>var width = 960,
+    height = 500;
+
+var fill = d3.scale.log()
+    .domain([10, 500])
+    .range(["#fff", "#e67e22"]);
+
+var path = d3.geo.path();
+
+var svg = d3.select("#slide-d3-firstmap").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("/assets/data/us-states.geo.json", function(error, geojson) {
+    if (error) throw error;
+
+    var projection = d3.geo.albersUsa()
+        .translate([width/2, height/2])
+        .scale([1000]);
+
+    var path = d3.geo.path()
+        .projection(projection);
+
+    var group = svg.append("g")
+        .selectAll('path')
+        .data(geojson.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style("fill", function(d) {
+            return fill(path.area(d));
+        });
+</code></pre>
+				</section>
+				<section id="slide-d3-firstmap-tooltip">
+					<h1>Adding a tooltip</h1>
+<pre><code>[...]
+var tooltip = d3.select("body")
+.append("div")
+.style("position", "absolute")
+.style("z-index", "10")
+.style("visibility", "hidden")
+.attr("class", "tooltip")
+.text("tooltip");
+
+[...]
+
+.on("mouseenter", function(d) {
+	tooltip.text(d.properties.name);
+})
+.on("mouseover", function() {
+	return tooltip.style("visibility", "visible");
+})
+.on("mousemove", function() {
+	return tooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+})
+.on("mouseout", function() {
+	return tooltip.style("visibility", "hidden");
+});
+
+</code></pre>
+				</section>
+				<section id="slide-d3-firstmap-proper-projection">
+					<h1>Use proper projection</h1>
+<pre><code>
+    var center = d3.geo.centroid(geojson);
+    var scale  = 1000;
+    var offset = [width/2, height/2];
+    var projection = d3.geo.mercator().scale(scale).center(center)
+        .translate(offset);
+
+    var path = d3.geo.path().projection(projection);
+
+    var bounds  = path.bounds(geojson);
+    var hscale  = scale*width  / (bounds[1][0] - bounds[0][0]);
+    var vscale  = scale*height / (bounds[1][1] - bounds[0][1]);
+    scale   = (hscale < vscale) ? hscale : vscale;
+    offset  = [width - (bounds[0][0] + bounds[1][0])/2,
+        height - (bounds[0][1] + bounds[1][1])/2];
+
+    // new projection
+    projection = d3.geo.mercator().center(center)
+        .scale(scale).translate(offset);
+    path = path.projection(projection);
+
+    // adjust projection
+    bounds  = path.bounds(geojson);
+    offset[0] = offset[0] + (width - bounds[1][0] - bounds[0][0]) / 2;
+    offset[1] = offset[1] + (height - bounds[1][1] - bounds[0][1]) / 2;
+
+    projection = d3.geo.mercator().center(center)
+        .scale(scale).translate(offset);
+    path = path.projection(projection);
+</code></pre>
+				</section>
 			</section>
 
+			<section id="slide-d3-visualize-data">
+				<h1>Visualize data</h1>
+
+			</section>
 			<section id="slide-08">
 				<h1>@TODO: tilenames</h1>
 			</section>
@@ -205,53 +304,6 @@
 			</section>
 
 			<!--
-			<section id="slide-04">
-				<h3>Alternatives</h3>
-				<img src="assets/alternatives-mapbox.png" class="alternatives" />
-				<img src="assets/alternative-snazzy-maps.png" class="alternatives" />
-				<img src="assets/alternative-stamen.png" class="alternatives" />
-				<img src="assets/alternative-stamen2.png" class="alternatives" />
-			</section>
-
-			<section id="slide-05">
-				<h1>Basics</h1>
-				<h2>geo projection</h2>
-				<h2>geojson</h2>
-				<h2>d3.js</h2>
-				<h2>tilenames</h2>
-				<h2>geo formats</h2>
-			</section>
-
-
-			<section id="slide-0todo">
-				<table>
-					<thead>
-						<tr>
-							<th>col1</th>
-							<th>col2</th>
-							<th>col3</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-
 			<section id="slide-0000">
 				<h2>simple d3.js bar chart</h2>
 				<svg id="slide-d3-02-01"></svg>
@@ -287,15 +339,7 @@ bar.append("text")
 </code></pre>
 
 			</section>
-			<section id="slide-000003">
-			</section>
 
-			<section>
-				<p class="fragment layer" data-layer="layer-1">frag 1</p>
-				<p class="fragment layer" data-layer="layer-2">frag 2</p>
-				<p class="fragment layer" data-layer="layer-3">frag 3</p>
-				<p class="fragment layer" data-layer="layer-4">frag 4</p>
-			</section>
 		-->
 		</div>
 	</div>
@@ -306,15 +350,15 @@ bar.append("text")
 	<script src="assets/d3.v3.min.js"></script>
 	<script src="assets/d3-selection-multi.v1.min.js"></script>
 	<script src="assets/d3.geo.projection.v0.min.js"></script>
+	<script src="assets/d3.geo.tile.min.js"></script>
 	<script src="assets/topojson.v1.min.js"></script>
-	<!-- <script src="assets/monomap.js"></script> -->
 
 	<script>
 		// More info https://github.com/hakimel/reveal.js#configuration
 		Reveal.initialize({
 			history: true,
 			progress: false,
-			parallaxBackgroundImage: 'assets/background-big.png',
+			parallaxBackgroundImage: 'assets/images/background-big.png',
 			parallaxBackgroundSize: '3000px 1500px',
 			// parallaxBackgroundHorizontal: 100,
 			// parallaxBackgroundVertical: 100,
@@ -354,21 +398,35 @@ bar.append("text")
 			var nextId = event.currentSlide.id;
 			var prevId = event.previousSlide ? event.previousSlide.id : null;
 
-			console.log('event.currentSlide', nextId);
-			console.log('event.previousSlide', prevId);
+
+			var slidesScripts = [
+				'slide-projections-transform',
+				'slide-d3-firstmap',
+				'slide-d3-firstmap-tooltip',
+				'slide-d3-firstmap-proper-projection',
+				'slide-d3-visualize-data'
+			];
+
+			if (_.indexOf(slidesScripts, nextId)) {
+				appendScript(nextId + '.js');
+			}
+
 
 			// Add scripts when enter slide
-			switch (nextId) {
+			/*switch (nextId) {
 				case 'slide-projections-transform':
 					appendScript('slide-projections-transform.js');
 					break;
-				case '3_1':
-					// appendScript('monomap-infinity.js');
+				case 'slide-d3-firstmap':
+					appendScript('slide-d3-firstmap.js');
+					break;
+				case 'slide-d3-firstmap-tooltip':
+					appendScript('slide-d3-firstmap-tooltip.js');
 					break;
 				default:
-					console.log('no fn found');
+//					console.log('no fn found');
 					break;
-			}
+			}*/
 
 		});
 

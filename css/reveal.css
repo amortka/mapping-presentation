@@ -1430,6 +1430,28 @@ html:-moz-full-screen-ancestor {
     width: 45%;
     left: 0; }
 
+.reveal #slide-d3-mapping pre {
+  width: 100%; }
+  .reveal #slide-d3-mapping pre code {
+    height: 200px;
+    -webkit-transition: height 0.5s ease-out;
+            transition: height 0.5s ease-out; }
+    .reveal #slide-d3-mapping pre code:active, .reveal #slide-d3-mapping pre code:focus, .reveal #slide-d3-mapping pre code:hover {
+      height: 500px; }
+
+.reveal #slide-d3-mapping .states {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round; }
+
+.tooltip {
+  background: #FFF;
+  color: #2c3e50;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-weight: 700;
+  padding: 0.2em;
+  border-radius: 0.2em; }
+
 /* -----------------------------------------------------------------------------
    --- utils
    ---------------------------------------------------------------------------*/
