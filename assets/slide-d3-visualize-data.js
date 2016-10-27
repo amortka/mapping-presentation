@@ -18,7 +18,7 @@ var tile = d3.geo.tile()
     .scale(projection.scale() * 2 * Math.PI)
     .translate(projection([0, 0]))
     // .zoomDelta((window.devicePixelRatio || 1) - .5);
-    .zoomDelta(0);
+    .zoomDelta(1);
 
 
 var svg = d3.select("#slide-d3-visualize-data").append("svg")
@@ -28,6 +28,14 @@ var svg = d3.select("#slide-d3-visualize-data").append("svg")
 var points = [
     {name: 'wroclaw', point: [17.03333, 51.1]}
 ];
+
+var tooltip = !d3.select(".tooltip").empty() ? d3.select(".tooltip") : d3.select("body")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .attr("class", "tooltip")
+        .text("tooltip");
 
 d3.json("/assets/data/pol_adm1_1.geo.json", function(error, geojson) {
     if (error) throw error;
@@ -47,7 +55,7 @@ d3.json("/assets/data/pol_adm1_1.geo.json", function(error, geojson) {
         .attr("xlink:href", "#land");
 
     svg.append("g")
-        //.attr("clip-path", "url(#clip)")
+        .attr("clip-path", "url(#clip)")
         .selectAll("image")
         .data(tiles)
         .enter().append("image")
@@ -92,12 +100,22 @@ d3.json("/assets/data/pol_adm1_1.geo.json", function(error, geojson) {
                 .nice()
                 .range([5, 15]);
 
-            console.log('populationRange', populationRange);
-
-            svg.append('g')
+            var cities = svg.append('g')
                 .selectAll('point')
                 .data(rows).enter()
                 .append("circle")
+                .attr('class', 'city')
+                .attr("cx", function(d) {
+                    return projection(center)[0];
+                })
+                .attr("cy", function(d) {
+                    return projection(center)[1];
+                })
+                .attr("r", "1")
+                .transition()
+                .duration(500)
+                .ease("circle")
+                .delay(function(d, i) { return i * 5; })
                 .attr("cx", function(d) {
                     return projection([d.lng, d.lat])[0];
                 })
@@ -109,18 +127,29 @@ d3.json("/assets/data/pol_adm1_1.geo.json", function(error, geojson) {
                 })
                 .attr("fill", function(d) {
                     return fill(d.population);
-                })
-                .on('mouseenter', function(d) {
+                });
+
+            svg.selectAll('.city').on('mouseenter', function(d) {
                     console.log('d', d);
+                    tooltip.text(d.city + ': ' + d.population);
                     d3.select(this)
                         .transition()
                         .duration(200)
                         .ease("ease")
-                        .attr('r', 30)
+                        .attr("r", function(d) {
+                            return size(d.population) * 3 + 'px';
+                        })
                         .attr('fill', '#9b59b6');
                 })
-                .on('mouseout', function(d) {
-                    console.log('d', d);
+                .on("mouseover", function() {
+                    return tooltip.style("visibility", "visible");
+                })
+                .on("mousemove", function() {
+                    return tooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+                })
+                .on('mouseout', function() {
+                   tooltip.style("visibility", "hidden");
+
                     d3.select(this)
                         .transition()
                         .duration(200)
