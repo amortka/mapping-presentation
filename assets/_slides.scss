@@ -135,6 +135,13 @@
 
 
   }
+
+  #slide-d3-visualize-data-lidl-bierda {
+    #mapLidlBierda {
+      width:100%;
+      height: 100%;
+    }
+  }
 }
 
 .tooltip {
@@ -168,4 +175,21 @@
   h6.text-light {
     font-weight: 200;
   }
+}
+
+
+
+/* -----------------------------------------------------------------------------
+   --- fix for leaflet inside .reveal
+   ---------------------------------------------------------------------------*/
+.reveal .leaflet-container img {
+  max-width: none;
+  max-height: none;
+}
+
+.reveal section .leaflet-container img {
+  margin: inherit;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
