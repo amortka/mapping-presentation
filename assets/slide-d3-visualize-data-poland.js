@@ -1,3 +1,4 @@
+(function() {
 console.log('slide-d3-visualize-data');
 
 var width = 960,
@@ -164,3 +165,5 @@ d3.json("/assets/data/pol_adm1_1.geo.json", function(error, geojson) {
         });
 
 });
+}());
+
