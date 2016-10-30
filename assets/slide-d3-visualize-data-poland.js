@@ -1,5 +1,5 @@
 (function() {
-console.log('slide-d3-visualize-data');
+console.log('slide-d3-visualize-data-poland');
 
 var width = 960,
     height = 500;
@@ -22,7 +22,7 @@ var tile = d3.geo.tile()
     .zoomDelta(1);
 
 
-var svg = d3.select("#slide-d3-visualize-data").append("svg")
+var svg = d3.select("#slide-d3-visualize-data-poland").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -166,4 +166,3 @@ d3.json("/assets/data/pol_adm1_1.geo.json", function(error, geojson) {
 
 });
 }());
-

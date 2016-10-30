@@ -54,10 +54,10 @@
 				<h1>Basics</h1>
 				<ul>
 					<li>geo projection
-					<li>gejson format</li>
-					<li>d3.js + leaflet</li>
-					<li>tilenames</li>
-					<li>geo formats, data</li>
+						<li>gejson format</li>
+						<li>d3.js + leaflet</li>
+						<li>tilenames</li>
+						<li>geo formats, data</li>
 				</ul>
 			</section>
 
@@ -77,8 +77,12 @@
 							<p>Angles are depicted accurately.</p>
 							<small>(If the map directs me to make what looks like a 90° left turn, or to bear right 30°, then that’s what I actually do.)</small>
 						</li>
-						<li><p>A small real-life circle like the should be shown as a circle on the map, not squashed into an ellipse.</p></li>
-						<li><p>By convention, north should always point straight up.</p></li>
+						<li>
+							<p>A small real-life circle like the should be shown as a circle on the map, not squashed into an ellipse.</p>
+						</li>
+						<li>
+							<p>By convention, north should always point straight up.</p>
+						</li>
 					</ol>
 					<img src="assets/Tissot_mercator.png" />
 				</section>
@@ -88,7 +92,7 @@
 				<section id="slide-geojson-format">
 					<h1>geojson format</h1>
 					<code>Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon</code>
-<pre><code>
+					<pre><code>
 {
     "type": "FeatureCollection",
     "features": [{
@@ -138,36 +142,36 @@
     }]
 }
 </pre></code>
-				<small><a href="http://geojson.org/geojson-spec.html#introduction">http://geojson.org/geojson-spec.html#introduction</a></small>
+					<small><a href="http://geojson.org/geojson-spec.html#introduction">http://geojson.org/geojson-spec.html#introduction</a></small>
 				</section>
-					<section id="slide-geojson-tools-github">
-						<h1>how to get data?</h1>
-						<p>github.com</p>
-						<img src="assets/images/geojson-poland.png" />
-					</section>
-					<section id="slide-geojson-tools-naturalearthdata">
-						<p>naturalearthdata.com</p>
-						<img src="assets/images/natural-data-sshot.png" />
-					</section>
-					<section id="slide-geojson-tools-geojson-maps">
-						<p>geojson-maps.kyd.com.au</p>
-						<img src="assets/images/natural-data-sshot.png" />
-					</section>
-					<section id="slide-geojson-tools-geojson-maps">
-						<h1>validate and explore your data</h1>
-						<p>geojsonlint.com</p>
-						<img src="assets/images/geoslint.png" />
-					</section>
-					<section id="slide-geojson-tools-geojson-maps">
-						<p>geojson.io</p>
-						<img src="assets/images/geojsonio.png" />
-					</section>
+				<section id="slide-geojson-tools-github">
+					<h1>how to get data?</h1>
+					<p>github.com</p>
+					<img src="assets/images/geojson-poland.png" />
+				</section>
+				<section id="slide-geojson-tools-naturalearthdata">
+					<p>naturalearthdata.com</p>
+					<img src="assets/images/natural-data-sshot.png" />
+				</section>
+				<section id="slide-geojson-tools-geojson-maps">
+					<p>geojson-maps.kyd.com.au</p>
+					<img src="assets/images/natural-data-sshot.png" />
+				</section>
+				<section id="slide-geojson-tools-geojson-maps">
+					<h1>validate and explore your data</h1>
+					<p>geojsonlint.com</p>
+					<img src="assets/images/geoslint.png" />
+				</section>
+				<section id="slide-geojson-tools-geojson-maps">
+					<p>geojson.io</p>
+					<img src="assets/images/geojsonio.png" />
+				</section>
 			</section>
 
 			<section id="slide-d3-mapping">
 				<section id="slide-d3-firstmap">
 					<h1>First map</h1>
-<pre><code>var width = 960,
+					<pre><code>var width = 960,
     height = 500;
 
 var fill = d3.scale.log()
@@ -202,7 +206,7 @@ d3.json("/assets/data/us-states.geo.json", function(error, geojson) {
 				</section>
 				<section id="slide-d3-firstmap-tooltip">
 					<h1>Adding a tooltip</h1>
-<pre><code>[...]
+					<pre><code>[...]
 var tooltip = d3.select("body")
 .append("div")
 .style("position", "absolute")
@@ -230,7 +234,7 @@ var tooltip = d3.select("body")
 				</section>
 				<section id="slide-d3-firstmap-proper-projection">
 					<h1>Use proper projection</h1>
-<pre><code>
+					<pre><code>
     var center = d3.geo.centroid(geojson);
     var scale  = 1000;
     var offset = [width/2, height/2];
@@ -263,51 +267,493 @@ var tooltip = d3.select("body")
 				</section>
 			</section>
 
-			<section id="slide-d3-visualize-data">
-				<section id="slide-d3-visualize-data-poland">
+			<section id="slide-d3-visualize-data-poland">
+				<h1>Visualize data Poland</h1>
 
-				</section>
-				<section id="slide-d3-visualize-data-lidl-bierda">
-					<h1>Visualize data</h1>
-					<div id="mapLidlBierda"></div>
-				</section>
 			</section>
-			<section id="slide-08">
-				<h1>@TODO: tilenames</h1>
+			<section id="slide-d3-visualize-data-stores">
+				<h1>Visualize stores</h1>
+				<div id="mapStores"></div>
+			</section>
+			</section>
+
+			<section id="slide-tiles">
+				<section id="silide-tiles-whatis">
+					<h1>The world of tiles</h1>
+					<ul class="tiles-vendors">
+						<li class=""><img src="assets/images/tiles-pgs-googlemaps.png" /></li>
+						<li class="fragment fade-left"><img src="assets/images/tiles-pgs-osm.png" /></li>
+						<li class="fragment fade-left"><img src="assets/images/tiles-pgs-bing.png" /></li>
+						<li class="fragment fade-left"><img src="assets/images/tiles-pgs-here.png" /></li>
+						<li class="fragment fade-left"><img src="assets/images/tiles-pgs-tomtom.png" /></li>
+					</ul>
+
+					<img class="fragment tiles-bars" src="assets/images/tiles-bars.png" />
+				</section>
+				<section id="slide-tiles-find-tilename">
+					<h1>Get tilename by lat, lon and zoom</h1>
+					<img src="assets/images/tiles-pgs-osm-debug-lines.png" />
+				</section>
+				<section id="slide-tiles-tilenames">
+					<h1>Tilenames</h1>
+					<h3>256px x 256px</h3>
+					<img src="assets/images/tiles-zoom1.png" />
+					<img src="assets/images/tiles-zoom2.png" />
+					<img src="assets/images/tiles-zoom3.png" />
+
+					<pre class="fragment"><code>
+-- lon./lat. -> tile XY
+n = 2 ^ zoom
+xtile = n * ((lon_deg + 180) / 360)
+ytile = n * (1 - (log(tan(lat_rad) + sec(lat_rad)) / π)) / 2
+
+-- tile XY to lon./lat.
+n = 2 ^ zoom
+lon_deg = xtile / n * 360.0 - 180.0
+lat_rad = arctan(sinh(π * (1 - 2 * ytile / n)))
+lat_deg = lat_rad * 180.0 / π
+					</code></pre>
+					<a href="https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames" class="source">wiki.openstreetmap.org/wiki/Slippy_map_tilenames</a>
+				</section>
+				<section id="slide-tiles-tiles-list">
+					<h1>tiles, a lot of tiles...</h1>
+					<table>
+						<thead>
+							<tr>
+								<th style="width: 123px;">​zoom level</th>
+								<th style="width: 198px;">​tile coverage</th>
+								<th style="width: 354px;">​number of tiles</th>
+								<th>tile size in degrees</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="width: 123px;">0</td>
+								<td style="width: 198px;">1</td>
+								<td style="width: 354px;">1</td>
+								<td>​360° x 170.1022°</td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">1</td>
+								<td style="width: 198px;">2 x 2</td>
+								<td style="width: 354px;">4</td>
+								<td>​180° x 85.0511°</td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">2</td>
+								<td style="width: 198px;">4 x 4</td>
+								<td style="width: 354px;">16</td>
+								<td>​90° x 42.5256°</td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">n</td>
+								<td style="width: 198px;">2^n x 2^n</td>
+								<td style="width: 354px;">2^2n</td>
+								<td>​360/2n° x 170.1022/2n°</td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">12</td>
+								<td style="width: 198px;">4096 * 4096</td>
+								<td style="width: 354px;">16 777 216</td>
+								<td>​0.0879° x 0.0415°</td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">16</td>
+								<td style="width: 198px;"></td>
+								<td style="width: 354px;">
+									<strong>2^32</strong> = 4 294 967
+								</td>
+								<td></td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">17</td>
+								<td style="width: 198px;"></td>
+								<td style="width: 354px;">17 179 869 184&nbsp;</td>
+								<td></td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">18</td>
+								<td style="width: 198px;"></td>
+								<td style="width: 354px;">68 719 476 736&nbsp;</td>
+								<td></td>
+							</tr>
+							<tr class="fragment">
+								<td style="width: 123px;">19</td>
+								<td style="width: 198px;"></td>
+								<td style="width: 354px;">274 877 906 944&nbsp;</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section id="slide-tiles-tiles-size">
+					<h1>Caching tiles</h1>
+					<p>avg. tile size ~= 16 KB</p>
+					<table class="fragment">
+						<thead>
+							<tr>
+								<th>​zoom level</th>
+								<th>tiles count</th>
+								<th>​size (KB)</th>
+								<th>cumulative size (MB)</th>
+								<th>cumulative size (GB)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>4</td>
+								<td>16</td>
+								<td>​0.06</td>
+								<td>​0.0001</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>16</td>
+								<td>256</td>
+								<td>​0.25</td>
+								<td>​0.0003</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>1 024</td>
+								<td>16 384</td>
+								<td>​21.82</td>
+								<td>​0.0218</td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>4 096</td>
+								<td>65 536</td>
+								<td>87.36</td>
+								<td>0.0874</td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td>16 384</td>
+								<td>262 144</td>
+								<td>349.50</td>
+								<td>0.3495</td>
+							</tr>
+							<tr>
+								<td>8</td>
+								<td>65 536</td>
+								<td>1 048 576</td>
+								<td>1 398.08</td>
+								<td>1.3981</td>
+							</tr>
+							<tr>
+								<td>9</td>
+								<td>2 62 144</td>
+								<td>41 94 304</td>
+								<td>5 592.38</td>
+								<td>5.5924</td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td>1 048 576</td>
+								<td>16 777 216</td>
+								<td>22 369.60</td>
+								<td>22.3696</td>
+							</tr>
+							<tr>
+								<td>11</td>
+								<td>4 194 304</td>
+								<td>67 108 864</td>
+								<td>89 478.46</td>
+								<td>89.4785</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</section>
 			</section>
 
 			<section id="slide-08">
 				<h1>@TODO: spatial data formats</h1>
 			</section>
 
-			<section id="mapnik-09">
-				<h1>@TODO: mapnik</h1>
-			</section>
-
-			<section id="mapnik-10">
-				<h1>@TODO: first map with mapnik</h1>
-			</section>
-
-			<section id="mapnik-11">
-				<section id="mapnik-11-01">
-					<h1>@TODO: mapnik styling</h1>
+			<section id="mapnik-mapnik">
+				<section id="mapnik-mapnik-org">
+					<h1>mapnik</h1>
+					<img src="assets/images/mapnik-org.png" />
 				</section>
-				<section id="mapnik-11-02">
-					<h1>@TODO: mapnik mcss -> xml</h1>
+				<section id="mapnik-mapnik-node">
+					<h1>mapnik/mapnik-node</h1>
+					<pre><code>
+	var mapnik = require('mapnik');
+	var fs = require('fs');
+
+	// register fonts and datasource plugins
+	mapnik.register_default_fonts();
+	mapnik.register_default_input_plugins();
+
+	var map = new mapnik.Map(256. 256);
+	map.load('./test/stylesheet.xml', function(err,map) {
+	    if (err) throw err;
+	    map.zoomAll();
+	    var im = new mapnik.Image(256, 256);
+	    map.render(im, function(err,im) {
+	      if (err) throw err;
+	      im.encode('png', function(err,buffer) {
+	          if (err) throw err;
+	          fs.writeFile('map.png',buffer, function(err) {
+	              if (err) throw err;
+	              console.log('saved map image to map.png');
+	          });
+	      });
+	    });
+	});
+</code></pre>
+					<a href="https://github.com/mapnik/node-mapnik" class="source">github.com/mapnik/node-mapnik</a>
+				</section>
+				<section id="mapnik-mapnik-node-samplemap">
+					<h1>sample map</h1>
+					<img src="assets/images/mapnik-map.png" />
+				</section>
+				<section id="mapnik-mapnik-node-samplemap-stylesheet">
+					<h1>stylesheet.xml</h1>
+					<img src="assets/images/mapnik-stylesheet.png" />
+					<a href="https://github.com/mapnik/mapnik/wiki/XMLConfigReference" class="source">github.com/mapnik/mapnik/wiki/XMLConfigReference</a>
+				</section>
+				<section id="mapnik-styling-example">
+					<h1>Mapnik styling</h1>
+					<img src="assets/images/mapnik-example-styles.png" />
+				</section>
+				<section id="mapnik-styling-example-xml" data-background-image="assets/images/gifs/oh-shi.gif">
+					<h1>stylesheet.xml</h1>
+					<h2>3557 lines</h2>
+					<h2>172 639 characters</h2>
 				</section>
 			</section>
 
-			<section id="slide-12">
-				<h1>@TODO: import data to postgresql</h1>
+			<section id="mapnik-styling">
+
+				<section id="mapnik-styling-cartocss">
+					<h1>CartoCSS</h1>
+					<pre><code>
+#world {
+  line-color: #fff;
+  line-width: 3;
+}
+
+#world::outline {
+  line-color: #000;
+  line-width: 6;
+}
+					</code></pre>
+				</section>
+			</section>
+
+			<section id="slide-import-data">
+				<section id="slide-import-postgresql">
+					<h1>Import data to postgresql</h1>
+					<h3>why postgresql?</h3>
+					<ul>
+						<li>postgis
+							<p>PostGIS is a spatial database extender for PostgreSQL object-relational database. </p>
+						</li>
+						<li>hstore extension
+							<p>sets of key/value pairs within a single PostgreSQL value</p>
+						</li>
+						<li>amazon rds
+							<p>Once provisioned, you can scale from 5GB to 6TB of storage and from 1,000 IOPS to 30,000 IOPS.</p>
+						</li>
+					</ul>
+				</section>
+
+				<section id="slide-import-docker">
+					<h1>dockerise import job</h1>
+					<h3>openfirmware/docker-osm2pgsql</h3>
+					<pre><code>
+# DOCKER-VERSION 1.5.0
+# VERSION 0.2
+
+FROM debian:wheezy
+MAINTAINER James Badger &lt;james@jamesbadger.ca&gt;
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y \
+    autoconf \
+    automake \
+    g++ \
+    git-core \
+    libboost-dev \
+    libboost-filesystem-dev \
+    libboost-system-dev \
+    libboost-thread-dev \
+    libbz2-dev \
+    libgeos++-dev \
+    libgeos-dev \
+    liblua5.2-dev \
+    libpq-dev \
+    libproj-dev \
+    libprotobuf-c0-dev \
+    libtool \
+    libxml2-dev \
+    lua5.2 \
+    make \
+    protobuf-c-compiler &&\
+    rm -rf /var/lib/apt/lists/*
+
+ENV HOME /root
+ENV OSM2PGSQL_VERSION 0.87.2
+
+RUN mkdir src &&\
+    cd src &&\
+    git clone --depth 1 --branch $OSM2PGSQL_VERSION https://github.com/openstreetmap/osm2pgsql.git &&\
+    cd osm2pgsql &&\
+    ./autogen.sh &&\
+    ./configure &&\
+    make &&\
+    make install &&\
+    cd /root &&\
+    rm -rf src
+
+ENTRYPOINT ["/bin/bash"]
+					</code></pre>
+				</section>
+				<section id="slide-import-docker-osm2pgsql">
+					<h3>osm2pgsql</h3>
+					<pre><code>osm2pgsql SVN version af61cae663 (64bit id space)
+
+release notes: 'Windows version built by Dominik Perpeet (http://www.customdebug.com/osm2pgsql/index.html)'
+Usage:
+      osm2pgsql.exe [options] planet.osm
+      osm2pgsql.exe [options] planet.osm.{gz,bz2}
+      osm2pgsql.exe [options] file1.osm file2.osm file3.osm
+
+This will import the data from the OSM file(s) into a PostgreSQL database
+suitable for use by the Mapnik renderer
+
+Options:
+ -a|--append          Add the OSM file into the database without removing
+                      existing data.
+ -b|--bbox            Apply a bounding box filter on the imported data
+                      Must be specified as: minlon,minlat,maxlon,maxlat
+                      e.g. --bbox -0.5,51.25,0.5,51.75
+ -c|--create          Remove existing data from the database. This is the
+                      default if --append is not specified.
+ -d|--database        The name of the PostgreSQL database to connect
+                      to (default: gis).
+ -i|--tablespace-index        The name of the PostgreSQL tablespace where
+                      all indexes will be created.
+                      The following options allow more fine-grained control:
+    --tablespace-main-data    tablespace for main tables
+    --tablespace-main-index   tablespace for main table indexes
+    --tablespace-slim-data    tablespace for slim mode tables
+    --tablespace-slim-index   tablespace for slim mode indexes
+                      (if unset, use db's default; -i is equivalent to setting
+                      --tablespace-main-index and --tablespace-slim-index)
+ -l|--latlong         Store data in degrees of latitude & longitude.
+ -m|--merc            Store data in proper spherical mercator (default)
+ -M|--oldmerc         Store data in the legacy OSM mercator format
+ -E|--proj num        Use projection EPSG:num
+ -u|--utf8-sanitize   Repair bad UTF8 input data (present in planet
+                      dumps prior to August 2007). Adds about 10% overhead.
+ -p|--prefix          Prefix for table names (default planet_osm)
+ -s|--slim            Store temporary data in the database. This greatly
+                      reduces the RAM usage but is much slower. This switch is
+                      required if you want to update with --append later.
+    --drop            only with --slim: drop temporary tables after import (no updates).
+ -S|--style           Location of the style file. Defaults to D:/maps/default.style
+ -C|--cache           Now required for slim and non-slim modes:
+                      Use up to this many MB for caching nodes (default: 800)
+ -U|--username        Postgresql user name
+                      password can be given by prompt or PGPASS environment variable.
+ -W|--password        Force password prompt.
+ -H|--host            Database server hostname or socket location.
+ -P|--port            Database server port.
+ -e|--expire-tiles [min_zoom-]max_zoom        Create a tile expiry list.
+ -o|--expire-output filename  Output filename for expired tiles list.
+ -r|--input-reader    Input frontend.
+                      libxml2   - Parse XML using libxml2. (default)
+                      primitive - Primitive XML parsing.
+                      pbf       - OSM binary format.
+ -O|--output          Output backend.
+                      pgsql - Output to a PostGIS database. (default)
+                      gazetteer - Output to a PostGIS database suitable for gazetteer
+                      null  - No output. Useful for testing.
+ -x|--extra-attributes
+                      Include attributes for each object in the database.
+                      This includes the username, userid, timestamp and version.
+                      Note: this option also requires additional entries in your style file.
+ -k|--hstore          Add tags without column to an additional hstore (key/value) column to postgresql tables
+    --hstore-match-only       Only keep objects that have a value in one of the columns
+    -                         (normal action with --hstore is to keep all objects)
+ -j|--hstore-all      Add all tags to an additional hstore (key/value) column in postgresql tables
+ -z|--hstore-column   Add an additional hstore (key/value) column containing all tags
+                      that start with the specified string, eg --hstore-column "name:" will
+                      produce an extra hstore column that contains all name:xx tags
+ -G|--multi-geometry  Generate multi-geometry features in postgresql tables.
+ -K|--keep-coastlines Keep coastline data rather than filtering it out.
+                      By default natural=coastline tagged data will be discarded based on the
+                      assumption that post-processed Coastline Checker shapefiles will be used.
+    --exclude-invalid-polygon
+ -I|--disable-parallel-indexing       Disable indexing all tables concurrently.
+    --unlogged        Use unlogged tables (lost on crash but faster). Requires PostgreSQL 9.1.
+    --cache-strategy  Specifies the method used to cache nodes in ram.
+                              Available options are:
+                              dense: caching strategy optimised for full planet import
+                              chunked: caching strategy optimised for non-contigouse memory allocation
+                              sparse: caching strategy optimised for small extracts
+                              optimized: automatically combines dense and sparse strategies for optimal storage efficiency.
+                                         optimized may use twice as much virtual memory, but no more physical memory
+                                 The default is "sparse"
+    --flat-nodes      Specifies the flat file to use to persistently store node information in slim mode instead of in pgsql
+                              This file is a single > 16Gb large file. This method is only recomended for full planet imports
+                              as it doesn't work well with small extracts. The default is disabled
+ -h|--help            Help information.
+ -v|--verbose         Verbose output.
+
+Add -v to display supported projections.
+Use -E to access any espg projections (usually in /usr/share/proj/epsg)
+</code></pre>
+					<h3>import to postgresql</h3>
+					<pre><code>SET pgpassword=****
+/data/osm2pgsql.exe" -cG -d gis -S /my-styles.style" -C 4096 --hstore -U postgres data/dolnoslaskie-latest.osm.bz2
+</code></pre>
+				</section>
+			</section>
+
+
+			<section id="slide-architecture-layers">
+				<h1>Architecture overview</h1>
+				<span class="fragment">
+					<img src="assets/images/layers-1-osm.png" class="layer"/>
+					<h4>osm data</h4>
+				</span>
+				<span class="fragment">
+					<img src="assets/images/layers-2-xml.png" class="layer"/>
+					<h4>xml stylesheet</h4>
+				</span>
+				<span class="fragment">
+					<img src="assets/images/layers-3-node.png" class="layer"/>
+					<h4>mapnik node.js</h4>
+				</span>
+				<span class="fragment">
+					<img src="assets/images/layers-4-db.png" class="layer"/>
+					<h4>postgresql</h4>
+				</span>
+				<span class="fragment">
+					<img src="assets/images/layers-5-aws.png" class="layer"/>
+					<h4>4xT1 + 1 RDS</h4>
+				</span>
+				<span class="fragment">
+					<img src="assets/images/layers-6-react.png" class="layer"/>
+					<h4>React UI</h4>
+				</span>
+				<span class="fragment">
+					<img src="assets/images/layers-7-map.png" class="layer"/>
+					<h4>Map</h4>
+				</span>
 			</section>
 
 			<section id="slide-13">
 				<h1>@TODO: run tileserver!</h1>
 			</section>
 
-			<section id="slide-14">
-				<h1>@TODO: architecture overview</h1>
-			</section>
 
 		</div>
 	</div>
@@ -321,6 +767,7 @@ var tooltip = d3.select("body")
 	<script src="assets/d3.geo.tile.min.js"></script>
 	<script src="assets/topojson.v1.min.js"></script>
 	<script src="assets/leaflet-src.js"></script>
+	<script src="assets/async.min.js"></script>
 
 	<script>
 		// More info https://github.com/hakimel/reveal.js#configuration
@@ -333,26 +780,29 @@ var tooltip = d3.select("body")
 			// parallaxBackgroundVertical: 100,
 
 			// More info https://github.com/hakimel/reveal.js#dependencies
-			dependencies: [/*{
-				src: 'socket.io/socket.io.js',
-				async: true
-			}, {
-				src: 'plugin/notes-server/client.js',
-				async: true
-			}, */{
-				src: 'plugin/markdown/marked.js'
-			}, {
-				src: 'plugin/markdown/markdown.js'
-			}, {
-				src: 'plugin/notes/notes.js',
-				async: true
-			}, {
-				src: 'plugin/highlight/highlight.js',
-				async: true,
-				callback: function() {
-					hljs.initHighlightingOnLoad();
+			dependencies: [
+				/*{
+								src: 'socket.io/socket.io.js',
+								async: true
+							}, {
+								src: 'plugin/notes-server/client.js',
+								async: true
+							}, */
+				{
+					src: 'plugin/markdown/marked.js'
+				}, {
+					src: 'plugin/markdown/markdown.js'
+				}, {
+					src: 'plugin/notes/notes.js',
+					async: true
+				}, {
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function() {
+						hljs.initHighlightingOnLoad();
+					}
 				}
-			}]
+			]
 		});
 
 		Reveal.addEventListener('fragmentshown', function(ev) {
@@ -374,7 +824,7 @@ var tooltip = d3.select("body")
 				'slide-d3-firstmap-tooltip',
 				'slide-d3-firstmap-proper-projection',
 				'slide-d3-visualize-data-poland',
-				'slide-d3-visualize-data-lidl-bierda'
+				'slide-d3-visualize-data-stores'
 			];
 
 			if (!!~_.indexOf(slidesScripts, nextId)) {
