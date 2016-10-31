@@ -1541,14 +1541,14 @@ html:-moz-full-screen-ancestor {
 &:nth-of-type(5).visible { top: 0px; z-index: 50; }
 &:nth-of-type(6).visible { top: -50px; z-index: 60; }
 */ }
-  .reveal #slide-architecture-layers span {
+  .reveal #slide-architecture-layers div {
     position: absolute;
     display: block;
     width: 100%;
     height: 100%;
     -webkit-perspective: 2000px;
             perspective: 2000px; }
-    .reveal #slide-architecture-layers span img.layer {
+    .reveal #slide-architecture-layers div img.layer {
       -webkit-transition: all 0.2s ease-out;
               transition: all 0.2s ease-out;
       position: absolute;
@@ -1559,46 +1559,46 @@ html:-moz-full-screen-ancestor {
       left: -100px;
       -webkit-transform: rotateX(71deg) rotateZ(-45deg) scale(1);
               transform: rotateX(71deg) rotateZ(-45deg) scale(1); }
-    .reveal #slide-architecture-layers span h4 {
+    .reveal #slide-architecture-layers div h4 {
       position: absolute;
       left: 700px; }
-    .reveal #slide-architecture-layers span.visible img.layer {
+    .reveal #slide-architecture-layers div.visible img.layer {
       -webkit-transform: rotateX(71deg) rotateZ(-45deg) scale(0.3);
               transform: rotateX(71deg) rotateZ(-45deg) scale(0.3); }
-  .reveal #slide-architecture-layers span:nth-of-type(1) img.layer {
+  .reveal #slide-architecture-layers div:nth-of-type(1) img.layer {
     top: 100px;
     z-index: 10; }
-  .reveal #slide-architecture-layers span:nth-of-type(1) h4 {
+  .reveal #slide-architecture-layers div:nth-of-type(1) h4 {
     top: 400px; }
-  .reveal #slide-architecture-layers span:nth-of-type(2) img.layer {
+  .reveal #slide-architecture-layers div:nth-of-type(2) img.layer {
     top: 50px;
     z-index: 20; }
-  .reveal #slide-architecture-layers span:nth-of-type(2) h4 {
+  .reveal #slide-architecture-layers div:nth-of-type(2) h4 {
     top: 350px; }
-  .reveal #slide-architecture-layers span:nth-of-type(3) img.layer {
+  .reveal #slide-architecture-layers div:nth-of-type(3) img.layer {
     top: 0px;
     z-index: 30; }
-  .reveal #slide-architecture-layers span:nth-of-type(3) h4 {
+  .reveal #slide-architecture-layers div:nth-of-type(3) h4 {
     top: 300px; }
-  .reveal #slide-architecture-layers span:nth-of-type(4) img.layer {
+  .reveal #slide-architecture-layers div:nth-of-type(4) img.layer {
     top: -50px;
     z-index: 40; }
-  .reveal #slide-architecture-layers span:nth-of-type(4) h4 {
+  .reveal #slide-architecture-layers div:nth-of-type(4) h4 {
     top: 250px; }
-  .reveal #slide-architecture-layers span:nth-of-type(5) img.layer {
+  .reveal #slide-architecture-layers div:nth-of-type(5) img.layer {
     top: -100px;
     z-index: 50; }
-  .reveal #slide-architecture-layers span:nth-of-type(5) h4 {
+  .reveal #slide-architecture-layers div:nth-of-type(5) h4 {
     top: 200px; }
-  .reveal #slide-architecture-layers span:nth-of-type(6) img.layer {
+  .reveal #slide-architecture-layers div:nth-of-type(6) img.layer {
     top: -150px;
     z-index: 60; }
-  .reveal #slide-architecture-layers span:nth-of-type(6) h4 {
+  .reveal #slide-architecture-layers div:nth-of-type(6) h4 {
     top: 150px; }
-  .reveal #slide-architecture-layers span:nth-of-type(7) img.layer {
+  .reveal #slide-architecture-layers div:nth-of-type(7) img.layer {
     top: -200px;
     z-index: 70; }
-  .reveal #slide-architecture-layers span:nth-of-type(7) h4 {
+  .reveal #slide-architecture-layers div:nth-of-type(7) h4 {
     top: 100px; }
 
 .tooltip {
