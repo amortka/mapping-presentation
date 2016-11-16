@@ -1,0 +1,1097 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>maps and data visualizations in d3.js</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/monomap.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="assets/_old/leaflet.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section id="title">
+            <h1 class="text-left">Have you ever wanted to have your own google maps?</h1>
+            <h3 class="text-left text-light">from idea to tileserver</h3>
+        </section>
+
+        <section>
+            <section id="slide-story">
+                <img src="assets/_old/images/story-1.jpg" class="story story-01"/>
+                <img src="assets/_old/images/story-2.jpg" class="story story-02"/>
+                <img src="assets/_old/images/story-3.png" class="story story-03"/>
+                <img src="assets/_old/images/story-4.jpg" class="story story-04"/>
+            </section>
+            <section id="slide-story-osm2tileserver">
+                <h3>openstreetmap data to tileserver</h3>
+                <img src="assets/_old/images/openstreetmap-wroclaw.png" class="map-left"/>
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="map-arrow" preserveAspectRatio="none"
+                     viewBox="0 0 70 70">
+                    <polygon points="0,21 35,21 35,0 70,35 35,70 35,49 0,49" class="shape-element"
+                             fill="#ecf0f1"></polygon>
+                </svg>
+                <img src="assets/_old/images/monomap-wroclaw.png" class="map-right"/>
+            </section>
+        </section>
+
+        <section id="slide-basics">
+            <h1>Basics</h1>
+            <ul>
+                <li>geo projection
+                <li>gejson format</li>
+                <li>d3.js + leaflet</li>
+                <li>tilenames</li>
+                <li>geo formats, data</li>
+            </ul>
+        </section>
+
+        <section id="slide-projections">
+            <section id="slide-projections-transform">
+                <h1>geo projections</h1>
+            </section>
+            <section id="slide-projections-mercator">
+                <h1>mercator projection</h1>
+                <h3>srs code EPSG:3857</h3>
+                <ol>
+                    <li>
+                        <p>Scale is the same in all directions.</p>
+                        <small>(A mile along a road should look the same length no matter which way the road is
+                            facing.)
+                        </small>
+                    </li>
+                    <li>
+                        <p>Angles are depicted accurately.</p>
+                        <small>(If the map directs me to make what looks like a 90° left turn, or to bear right 30°,
+                            then that’s what I actually do.)
+                        </small>
+                    </li>
+                    <li>
+                        <p>A small real-life circle like the should be shown as a circle on the map, not squashed into
+                            an ellipse.</p>
+                    </li>
+                    <li>
+                        <p>By convention, north should always point straight up.</p>
+                    </li>
+                </ol>
+                <img src="assets/_old/Tissot_mercator.png"/>
+            </section>
+            <section id="slide-projections-projections">
+                <h1>Proper geo projections</h1>
+                <h3>Maps that preserve shape - conformal projection</h3>
+                <ul>
+                    <li>Topographic maps and cadastral (land parcel) maps</li>
+                    <li>Navigation charts (for plotting course bearings and wind direction)</li>
+                    <li>Civil engineering maps</li>
+                    <li>Military maps</li>
+                    <li>Weather maps (for showing the local direction in which weather systems are moving)</li>
+                </ul>
+                <h3>Maps that preserve area - equal-area projection</h3>
+                <ul>
+                    <li>The density of an attribute with dots (for example, population density)</li>
+                    <li>The spatial extent of a categorical attribute (for example, land use maps)</li>
+                    <li>Quantitative attributes by area (for example, Gross Domestic Product by country)</li>
+                </ul>
+                <h3>Maps that preserve scale</h3>
+                <ul>
+                    <li>Maps of airline distances from a single city to several other cities</li>
+                    <li>Seismic maps showing distances from the epicenter of an earthquake</li>
+                    <li>Maps used to calculate costs or charges based on straight-line distance from a source</li>
+                    <li>Maps used to calculate ranges; for example, the cruising ranges of airplanes or the habitats of
+                        animal species
+                    </li>
+                </ul>
+                <h3>Maps that preserve direction</h3>
+                <ul>
+                    <li>Planning air and sea routes</li>
+                    <li>Mapping phenomena, like radio waves, that follow shortest-distance paths.</li>
+                </ul>
+            </section>
+            <section id="slide-projections-recommended-general">
+                <h1>General purpose maps</h1>
+                <h3>Balanced distortion of shape and area</h3>
+                <ul>
+                    <li>Winkel Tripel (currently used by the National Geographic Society for world atlas maps)</li>
+                    <li>Robinson</li>
+                    <li>Miller Cylindrical</li>
+                </ul>
+                <h3>Larger-scale maps</h3>
+                <ul>
+                    <li>Azimuthal Equidistant</li>
+                    <li>Equidistant Conic</li>
+                    <li>Plate Carrée</li>
+                </ul>
+            </section>
+
+            <section id="slide-projections-recommended-hemisphere">
+                <h1>Hemisphere maps</h1>
+                <img src="assets/_old/images/geo-projections.gif"/>
+            </section>
+            <section id="slide-projections-recommended-smaller">
+                <h1>Hemisphere maps</h1>
+            </section>
+        </section>
+
+        <section id="slide-geojson">
+            <section id="slide-geojson-format">
+                <h1>geojson format</h1>
+                <code>Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon</code>
+                <pre><code>
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [102.0, 0.5]
+        },
+        "properties": {
+            "prop0": "value0"
+        }
+    }, {
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [102.0, 0.0],
+                [103.0, 1.0],
+                [104.0, 0.0],
+                [105.0, 1.0]
+            ]
+        },
+        "properties": {
+            "prop0": "value0",
+            "prop1": 0.0
+        }
+    }, {
+        "type": "Feature",
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [100.0, 0.0],
+                    [101.0, 0.0],
+                    [101.0, 1.0],
+                    [100.0, 1.0],
+                    [100.0, 0.0]
+                ]
+            ]
+        },
+        "properties": {
+            "prop0": "value0",
+            "prop1": {
+                "this": "that"
+            }
+        }
+    }]
+}
+</pre>
+                </code>
+                <small><a href="http://geojson.org/geojson-spec.html#introduction">http://geojson.org/geojson-spec.html#introduction</a>
+                </small>
+            </section>
+            <section id="slide-geojson-tools-github">
+                <h1>how to get data?</h1>
+                <p>github.com</p>
+                <img src="assets/_old/images/geojson-poland.png"/>
+            </section>
+            <section id="slide-geojson-tools-naturalearthdata">
+                <p>naturalearthdata.com</p>
+                <img src="assets/_old/images/natural-data-sshot.png"/>
+            </section>
+            <section id="slide-geojson-tools-geojson-maps">
+                <p>geojson-maps.kyd.com.au</p>
+                <img src="assets/_old/images/geojson-maps-kyd.png"/>
+            </section>
+            <section id="slide-geojson-tools-geojson-maps">
+                <h1>validate and explore your data</h1>
+                <p>geojsonlint.com</p>
+                <img src="assets/_old/images/geoslint.png"/>
+            </section>
+            <section id="slide-geojson-tools-geojson-maps">
+                <p>geojson.io</p>
+                <img src="assets/_old/images/geojsonio.png"/>
+            </section>
+        </section>
+
+        <section id="slide-d3-mapping">
+            <section id="slide-d3-firstmap">
+                <h1>First map</h1>
+                <pre><code>var width = 960,
+    height = 500;
+
+var fill = d3.scale.log()
+    .domain([10, 500])
+    .range(["#fff", "#e67e22"]);
+
+var path = d3.geo.path();
+
+var svg = d3.select("#slide-d3-firstmap").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("/assets/data/us-states.geo.json", function(error, geojson) {
+    if (error) throw error;
+
+    var projection = d3.geo.albersUsa()
+        .translate([width/2, height/2])
+        .scale([1000]);
+
+    var path = d3.geo.path()
+        .projection(projection);
+
+    var group = svg.append("g")
+        .selectAll('path')
+        .data(geojson.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style("fill", function(d) {
+            return fill(path.area(d));
+        });
+</code></pre>
+            </section>
+            <section id="slide-d3-firstmap-tooltip">
+                <h1>Adding a tooltip</h1>
+                <pre><code>[...]
+var tooltip = d3.select("body")
+.append("div")
+.style("position", "absolute")
+.style("z-index", "10")
+.style("visibility", "hidden")
+.attr("class", "tooltip")
+.text("tooltip");
+
+[...]
+
+.on("mouseenter", function(d) {
+	tooltip.text(d.properties.name);
+})
+.on("mouseover", function() {
+	return tooltip.style("visibility", "visible");
+})
+.on("mousemove", function() {
+	return tooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+})
+.on("mouseout", function() {
+	return tooltip.style("visibility", "hidden");
+});
+
+</code></pre>
+            </section>
+            <section id="slide-d3-firstmap-proper-projection">
+                <h1>Use proper projection</h1>
+                <pre><code>
+    var center = d3.geo.centroid(geojson);
+    var scale  = 1000;
+    var offset = [width/2, height/2];
+    var projection = d3.geo.mercator().scale(scale).center(center)
+        .translate(offset);
+
+    var path = d3.geo.path().projection(projection);
+
+    var bounds  = path.bounds(geojson);
+    var hscale  = scale*width  / (bounds[1][0] - bounds[0][0]);
+    var vscale  = scale*height / (bounds[1][1] - bounds[0][1]);
+    scale   = (hscale < vscale) ? hscale : vscale;
+    offset  = [width - (bounds[0][0] + bounds[1][0])/2,
+        height - (bounds[0][1] + bounds[1][1])/2];
+
+    // new projection
+    projection = d3.geo.mercator().center(center)
+        .scale(scale).translate(offset);
+    path = path.projection(projection);
+
+    // adjust projection
+    bounds  = path.bounds(geojson);
+    offset[0] = offset[0] + (width - bounds[1][0] - bounds[0][0]) / 2;
+    offset[1] = offset[1] + (height - bounds[1][1] - bounds[0][1]) / 2;
+
+    projection = d3.geo.mercator().center(center)
+        .scale(scale).translate(offset);
+    path = path.projection(projection);
+</code></pre>
+            </section>
+        </section>
+
+        <section id="slide-d3-visualize-data">
+            <section id="slide-d3-visualize-data-poland">
+                <h1>Visualize data Poland</h1>
+<pre><code>(function() {
+console.log('slide-d3-visualize-data-poland');
+
+var width = 960,
+    height = 500;
+
+var center = [19.433036923499714, 52.10849565486152];
+var scale = 3025.2770864882386;
+var offset = [399.61664451339277, 242.03398194239685];
+
+var projection = d3.geo.mercator()
+    .center(center)
+    .scale(scale);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var tile = d3.geo.tile()
+    .scale(projection.scale() * 2 * Math.PI)
+    .translate(projection([0, 0]))
+    // .zoomDelta((window.devicePixelRatio || 1) - .5);
+    .zoomDelta(1);
+
+
+var svg = d3.select("#slide-d3-visualize-data-poland").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var points = [
+    {name: 'wroclaw', point: [17.03333, 51.1]}
+];
+
+var tooltip = !d3.select(".tooltip").empty() ? d3.select(".tooltip") : d3.select("body")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .attr("class", "tooltip")
+        .text("tooltip");
+
+d3.json("/assets/data/pol_adm1_1.geo.json", function(error, geojson) {
+    if (error) throw error;
+
+    var tiles = tile();
+
+    var defs = svg.append("defs");
+
+    defs.append("path")
+        .attr("id", "land")
+        .datum(geojson)
+        .attr("d", path);
+
+    defs.append("clipPath")
+        .attr("id", "clip")
+        .append("use")
+        .attr("xlink:href", "#land");
+
+    svg.append("g")
+        .attr("clip-path", "url(#clip)")
+        .selectAll("image")
+        .data(tiles)
+        .enter().append("image")
+        .attr("xlink:href", function(d) {
+            return "http://" + ["a", "b"][Math.random() * 2 | 0] + ".tile.thunderforest.com/landscape/" + d[2] + "/" + d[0] + "/" + d[1] + ".png?apikey=f6edb1815e5d47eba0dac809df4a7641";
+        })
+        .attr("width", Math.round(tiles.scale))
+        .attr("height", Math.round(tiles.scale))
+        .attr("x", function(d) {
+            return Math.round((d[0] + tiles.translate[0]) * tiles.scale);
+        })
+        .attr("y", function(d) {
+            return Math.round((d[1] + tiles.translate[1]) * tiles.scale);
+        });
+
+    svg.append("g")
+        .selectAll('path')
+        .data(geojson.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style('fill', 'none')
+        .style("stroke", '#000');
+
+    d3.csv('assets/data/miasta.csv')
+        .get(function(error, rows) {
+
+            var populationRange = {
+                min: d3.min(rows.map(function(row) {
+                    return parseInt(row.population, 10);
+                })),
+                max: d3.max(rows.map(function(row) {
+                    return parseInt(row.population, 10);
+                }))
+            };
+
+            var fill = d3.scale.linear()
+                .domain([populationRange.min, populationRange.max])
+                .range(['#2ecc71', '#e74c3c']);
+
+            var size = d3.scale.linear()
+                .domain([populationRange.min, populationRange.max])
+                .nice()
+                .range([5, 15]);
+
+            var cities = svg.append('g')
+                .selectAll('point')
+                .data(rows).enter()
+                .append("circle")
+                .attr('class', 'city')
+                .attr("cx", function(d) {
+                    return projection(center)[0];
+                })
+                .attr("cy", function(d) {
+                    return projection(center)[1];
+                })
+                .attr("r", "1")
+                .transition()
+                .duration(500)
+                .ease("circle")
+                .delay(function(d, i) { return i * 5; })
+                .attr("cx", function(d) {
+                    return projection([d.lng, d.lat])[0];
+                })
+                .attr("cy", function(d) {
+                    return projection([d.lng, d.lat])[1];
+                })
+                .attr("r", function(d) {
+                    return size(d.population) + 'px';
+                })
+                .attr("fill", function(d) {
+                    return fill(d.population);
+                });
+
+            svg.selectAll('.city').on('mouseenter', function(d) {
+                    console.log('d', d);
+                    tooltip.text(d.city + ': ' + d.population);
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .ease("ease")
+                        .attr("r", function(d) {
+                            return size(d.population) * 3 + 'px';
+                        })
+                        .attr('fill', '#9b59b6');
+                })
+                .on("mouseover", function() {
+                    return tooltip.style("visibility", "visible");
+                })
+                .on("mousemove", function() {
+                    return tooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+                })
+                .on('mouseout', function() {
+                   tooltip.style("visibility", "hidden");
+
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .ease("ease")
+                        .attr("r", function(d) {
+                            return size(d.population) + 'px';
+                        })
+                        .attr("fill", function(d) {
+                            return fill(d.population);
+                        })
+                });
+        });
+
+});
+}());
+
+</code></pre>
+            </section>
+        </section>
+        <section id="slide-d3-visualize-data-stores">
+            <h1>Visualize stores</h1>
+            <div id="mapStores"></div>
+        </section>
+        </section>
+
+        <section id="slide-tiles">
+            <section id="silide-tiles-whatis">
+                <h1>The world of tiles</h1>
+                <ul class="tiles-vendors">
+                    <li class=""><img src="assets/_old/images/tiles-pgs-googlemaps.png"/></li>
+                    <li class="fragment fade-left"><img src="assets/_old/images/tiles-pgs-osm.png"/></li>
+                    <li class="fragment fade-left"><img src="assets/_old/images/tiles-pgs-bing.png"/></li>
+                    <li class="fragment fade-left"><img src="assets/_old/images/tiles-pgs-here.png"/></li>
+                    <li class="fragment fade-left"><img src="assets/_old/images/tiles-pgs-tomtom.png"/></li>
+                </ul>
+
+                <img class="fragment tiles-bars" src="assets/_old/images/tiles-bars.png"/>
+            </section>
+            <section id="slide-tiles-find-tilename">
+                <h1>Get tilename by lat, lon and zoom</h1>
+                <img src="assets/_old/images/tiles-pgs-osm-debug-lines.png"/>
+            </section>
+            <section id="slide-tiles-tilenames">
+                <h1>Tilenames</h1>
+                <h3>256px x 256px</h3>
+                <img src="assets/_old/images/tiles-zoom1.png"/>
+                <img src="assets/_old/images/tiles-zoom2.png"/>
+                <img src="assets/_old/images/tiles-zoom3.png"/>
+
+                <pre class="fragment"><code>
+-- lon./lat. -> tile XY
+n = 2 ^ zoom
+xtile = n * ((lon_deg + 180) / 360)
+ytile = n * (1 - (log(tan(lat_rad) + sec(lat_rad)) / π)) / 2
+
+-- tile XY to lon./lat.
+n = 2 ^ zoom
+lon_deg = xtile / n * 360.0 - 180.0
+lat_rad = arctan(sinh(π * (1 - 2 * ytile / n)))
+lat_deg = lat_rad * 180.0 / π
+					</code></pre>
+                <a href="https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames" class="source">wiki.openstreetmap.org/wiki/Slippy_map_tilenames</a>
+            </section>
+            <section id="slide-tiles-tiles-list">
+                <h1>tiles, a lot of tiles...</h1>
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="width: 123px;">​zoom level</th>
+                        <th style="width: 198px;">​tile coverage</th>
+                        <th style="width: 354px;">​number of tiles</th>
+                        <th>tile size in degrees</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="width: 123px;">0</td>
+                        <td style="width: 198px;">1</td>
+                        <td style="width: 354px;">1</td>
+                        <td>​360° x 170.1022°</td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">1</td>
+                        <td style="width: 198px;">2 x 2</td>
+                        <td style="width: 354px;">4</td>
+                        <td>​180° x 85.0511°</td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">2</td>
+                        <td style="width: 198px;">4 x 4</td>
+                        <td style="width: 354px;">16</td>
+                        <td>​90° x 42.5256°</td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">n</td>
+                        <td style="width: 198px;">2^n x 2^n</td>
+                        <td style="width: 354px;">2^2n</td>
+                        <td>​360/2n° x 170.1022/2n°</td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">12</td>
+                        <td style="width: 198px;">4096 * 4096</td>
+                        <td style="width: 354px;">16 777 216</td>
+                        <td>​0.0879° x 0.0415°</td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">16</td>
+                        <td style="width: 198px;"></td>
+                        <td style="width: 354px;">
+                            <strong>2^32</strong> = 4 294 967
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">17</td>
+                        <td style="width: 198px;"></td>
+                        <td style="width: 354px;">17 179 869 184&nbsp;</td>
+                        <td></td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">18</td>
+                        <td style="width: 198px;"></td>
+                        <td style="width: 354px;">68 719 476 736&nbsp;</td>
+                        <td></td>
+                    </tr>
+                    <tr class="fragment">
+                        <td style="width: 123px;">19</td>
+                        <td style="width: 198px;"></td>
+                        <td style="width: 354px;">274 877 906 944&nbsp;</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section id="slide-tiles-tiles-size">
+                <h1>Caching tiles</h1>
+                <p>avg. tile size ~= 16 KB</p>
+                <table class="fragment">
+                    <thead>
+                    <tr>
+                        <th>​zoom level</th>
+                        <th>tiles count</th>
+                        <th>​size (KB)</th>
+                        <th>cumulative size (MB)</th>
+                        <th>cumulative size (GB)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>4</td>
+                        <td>16</td>
+                        <td>​0.06</td>
+                        <td>​0.0001</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>16</td>
+                        <td>256</td>
+                        <td>​0.25</td>
+                        <td>​0.0003</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>1 024</td>
+                        <td>16 384</td>
+                        <td>​21.82</td>
+                        <td>​0.0218</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>4 096</td>
+                        <td>65 536</td>
+                        <td>87.36</td>
+                        <td>0.0874</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>16 384</td>
+                        <td>262 144</td>
+                        <td>349.50</td>
+                        <td>0.3495</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>65 536</td>
+                        <td>1 048 576</td>
+                        <td>1 398.08</td>
+                        <td>1.3981</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>2 62 144</td>
+                        <td>41 94 304</td>
+                        <td>5 592.38</td>
+                        <td>5.5924</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>1 048 576</td>
+                        <td>16 777 216</td>
+                        <td>22 369.60</td>
+                        <td>22.3696</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>4 194 304</td>
+                        <td>67 108 864</td>
+                        <td>89 478.46</td>
+                        <td>89.4785</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section id="slide-08">
+            <h1>@TODO: spatial data formats</h1>
+        </section>
+
+        <section id="mapnik-mapnik">
+            <section id="mapnik-mapnik-org">
+                <h1>mapnik</h1>
+                <img src="assets/_old/images/mapnik-org.png"/>
+            </section>
+            <section id="mapnik-mapnik-node">
+                <h1>mapnik/mapnik-node</h1>
+                <pre><code>
+	var mapnik = require('mapnik');
+	var fs = require('fs');
+
+	// register fonts and datasource plugins
+	mapnik.register_default_fonts();
+	mapnik.register_default_input_plugins();
+
+	var map = new mapnik.Map(256. 256);
+	map.load('./test/stylesheet.xml', function(err,map) {
+	    if (err) throw err;
+	    map.zoomAll();
+	    var im = new mapnik.Image(256, 256);
+	    map.render(im, function(err,im) {
+	      if (err) throw err;
+	      im.encode('png', function(err,buffer) {
+	          if (err) throw err;
+	          fs.writeFile('map.png',buffer, function(err) {
+	              if (err) throw err;
+	              console.log('saved map image to map.png');
+	          });
+	      });
+	    });
+	});
+</code></pre>
+                <a href="https://github.com/mapnik/node-mapnik" class="source">github.com/mapnik/node-mapnik</a>
+            </section>
+            <section id="mapnik-mapnik-node-samplemap">
+                <h1>sample map</h1>
+                <img src="assets/_old/images/mapnik-map.png"/>
+            </section>
+            <section id="mapnik-mapnik-node-samplemap-stylesheet">
+                <h1>stylesheet.xml</h1>
+                <img src="assets/_old/images/mapnik-stylesheet.png"/>
+                <a href="https://github.com/mapnik/mapnik/wiki/XMLConfigReference" class="source">github.com/mapnik/mapnik/wiki/XMLConfigReference</a>
+            </section>
+            <section id="mapnik-styling-example">
+                <h1>Mapnik styling</h1>
+                <img src="assets/_old/images/mapnik-example-styles.png"/>
+            </section>
+            <section id="mapnik-styling-example-xml" data-background-image="assets/images/gifs/nope-nope.gif">
+                <h1>stylesheet.xml</h1>
+                <h2>3557 lines</h2>
+                <h2>172 639 characters</h2>
+            </section>
+        </section>
+
+        <section id="mapnik-styling">
+
+            <section id="mapnik-styling-cartocss">
+                <h1>CartoCSS</h1>
+                <pre><code>
+#world {
+  line-color: #fff;
+  line-width: 3;
+}
+
+#world::outline {
+  line-color: #000;
+  line-width: 6;
+}
+					</code></pre>
+            </section>
+        </section>
+
+        <section id="slide-import-data">
+            <section id="slide-import-postgresql">
+                <h1>Import data to postgresql</h1>
+                <h3>why postgresql?</h3>
+                <ul>
+                    <li>postgis
+                        <p>PostGIS is a spatial database extender for PostgreSQL object-relational database. </p>
+                    </li>
+                    <li>hstore extension
+                        <p>sets of key/value pairs within a single PostgreSQL value</p>
+                    </li>
+                    <li>amazon rds
+                        <p>Once provisioned, you can scale from 5GB to 6TB of storage and from 1,000 IOPS to 30,000
+                            IOPS.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="slide-import-docker">
+                <h1>dockerise import job</h1>
+                <h3>openfirmware/docker-osm2pgsql</h3>
+                <pre><code>
+# DOCKER-VERSION 1.5.0
+# VERSION 0.2
+
+FROM debian:wheezy
+MAINTAINER James Badger &lt;james@jamesbadger.ca&gt;
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y \
+    autoconf \
+    automake \
+    g++ \
+    git-core \
+    libboost-dev \
+    libboost-filesystem-dev \
+    libboost-system-dev \
+    libboost-thread-dev \
+    libbz2-dev \
+    libgeos++-dev \
+    libgeos-dev \
+    liblua5.2-dev \
+    libpq-dev \
+    libproj-dev \
+    libprotobuf-c0-dev \
+    libtool \
+    libxml2-dev \
+    lua5.2 \
+    make \
+    protobuf-c-compiler &&\
+    rm -rf /var/lib/apt/lists/*
+
+ENV HOME /root
+ENV OSM2PGSQL_VERSION 0.87.2
+
+RUN mkdir src &&\
+    cd src &&\
+    git clone --depth 1 --branch $OSM2PGSQL_VERSION https://github.com/openstreetmap/osm2pgsql.git &&\
+    cd osm2pgsql &&\
+    ./autogen.sh &&\
+    ./configure &&\
+    make &&\
+    make install &&\
+    cd /root &&\
+    rm -rf src
+
+ENTRYPOINT ["/bin/bash"]
+					</code></pre>
+            </section>
+            <section id="slide-import-docker-osm2pgsql">
+                <h3>osm2pgsql</h3>
+                <pre><code>osm2pgsql SVN version af61cae663 (64bit id space)
+
+release notes: 'Windows version built by Dominik Perpeet (http://www.customdebug.com/osm2pgsql/index.html)'
+Usage:
+      osm2pgsql.exe [options] planet.osm
+      osm2pgsql.exe [options] planet.osm.{gz,bz2}
+      osm2pgsql.exe [options] file1.osm file2.osm file3.osm
+
+This will import the data from the OSM file(s) into a PostgreSQL database
+suitable for use by the Mapnik renderer
+
+Options:
+ -a|--append          Add the OSM file into the database without removing
+                      existing data.
+ -b|--bbox            Apply a bounding box filter on the imported data
+                      Must be specified as: minlon,minlat,maxlon,maxlat
+                      e.g. --bbox -0.5,51.25,0.5,51.75
+ -c|--create          Remove existing data from the database. This is the
+                      default if --append is not specified.
+ -d|--database        The name of the PostgreSQL database to connect
+                      to (default: gis).
+ -i|--tablespace-index        The name of the PostgreSQL tablespace where
+                      all indexes will be created.
+                      The following options allow more fine-grained control:
+    --tablespace-main-data    tablespace for main tables
+    --tablespace-main-index   tablespace for main table indexes
+    --tablespace-slim-data    tablespace for slim mode tables
+    --tablespace-slim-index   tablespace for slim mode indexes
+                      (if unset, use db's default; -i is equivalent to setting
+                      --tablespace-main-index and --tablespace-slim-index)
+ -l|--latlong         Store data in degrees of latitude & longitude.
+ -m|--merc            Store data in proper spherical mercator (default)
+ -M|--oldmerc         Store data in the legacy OSM mercator format
+ -E|--proj num        Use projection EPSG:num
+ -u|--utf8-sanitize   Repair bad UTF8 input data (present in planet
+                      dumps prior to August 2007). Adds about 10% overhead.
+ -p|--prefix          Prefix for table names (default planet_osm)
+ -s|--slim            Store temporary data in the database. This greatly
+                      reduces the RAM usage but is much slower. This switch is
+                      required if you want to update with --append later.
+    --drop            only with --slim: drop temporary tables after import (no updates).
+ -S|--style           Location of the style file. Defaults to D:/maps/default.style
+ -C|--cache           Now required for slim and non-slim modes:
+                      Use up to this many MB for caching nodes (default: 800)
+ -U|--username        Postgresql user name
+                      password can be given by prompt or PGPASS environment variable.
+ -W|--password        Force password prompt.
+ -H|--host            Database server hostname or socket location.
+ -P|--port            Database server port.
+ -e|--expire-tiles [min_zoom-]max_zoom        Create a tile expiry list.
+ -o|--expire-output filename  Output filename for expired tiles list.
+ -r|--input-reader    Input frontend.
+                      libxml2   - Parse XML using libxml2. (default)
+                      primitive - Primitive XML parsing.
+                      pbf       - OSM binary format.
+ -O|--output          Output backend.
+                      pgsql - Output to a PostGIS database. (default)
+                      gazetteer - Output to a PostGIS database suitable for gazetteer
+                      null  - No output. Useful for testing.
+ -x|--extra-attributes
+                      Include attributes for each object in the database.
+                      This includes the username, userid, timestamp and version.
+                      Note: this option also requires additional entries in your style file.
+ -k|--hstore          Add tags without column to an additional hstore (key/value) column to postgresql tables
+    --hstore-match-only       Only keep objects that have a value in one of the columns
+    -                         (normal action with --hstore is to keep all objects)
+ -j|--hstore-all      Add all tags to an additional hstore (key/value) column in postgresql tables
+ -z|--hstore-column   Add an additional hstore (key/value) column containing all tags
+                      that start with the specified string, eg --hstore-column "name:" will
+                      produce an extra hstore column that contains all name:xx tags
+ -G|--multi-geometry  Generate multi-geometry features in postgresql tables.
+ -K|--keep-coastlines Keep coastline data rather than filtering it out.
+                      By default natural=coastline tagged data will be discarded based on the
+                      assumption that post-processed Coastline Checker shapefiles will be used.
+    --exclude-invalid-polygon
+ -I|--disable-parallel-indexing       Disable indexing all tables concurrently.
+    --unlogged        Use unlogged tables (lost on crash but faster). Requires PostgreSQL 9.1.
+    --cache-strategy  Specifies the method used to cache nodes in ram.
+                              Available options are:
+                              dense: caching strategy optimised for full planet import
+                              chunked: caching strategy optimised for non-contigouse memory allocation
+                              sparse: caching strategy optimised for small extracts
+                              optimized: automatically combines dense and sparse strategies for optimal storage efficiency.
+                                         optimized may use twice as much virtual memory, but no more physical memory
+                                 The default is "sparse"
+    --flat-nodes      Specifies the flat file to use to persistently store node information in slim mode instead of in pgsql
+                              This file is a single > 16Gb large file. This method is only recomended for full planet imports
+                              as it doesn't work well with small extracts. The default is disabled
+ -h|--help            Help information.
+ -v|--verbose         Verbose output.
+
+Add -v to display supported projections.
+Use -E to access any espg projections (usually in /usr/share/proj/epsg)
+</code></pre>
+                <h3>import to postgresql</h3>
+                <pre><code>SET pgpassword=****
+/data/osm2pgsql.exe" -cG -d gis -S /my-styles.style" -C 4096 --hstore -U postgres data/dolnoslaskie-latest.osm.bz2
+</code></pre>
+            </section>
+        </section>
+
+
+        <section id="slide-architecture-layers">
+            <h1>Architecture overview</h1>
+            <span class="fragment">
+					<img src="assets/_old/images/layers-1-osm.png" class="layer"/>
+					<h4>osm data</h4>
+				</span>
+            <span class="fragment">
+					<img src="assets/_old/images/layers-2-xml.png" class="layer"/>
+					<h4>xml stylesheet</h4>
+				</span>
+            <span class="fragment">
+					<img src="assets/_old/images/layers-3-node.png" class="layer"/>
+					<h4>mapnik node.js</h4>
+				</span>
+            <span class="fragment">
+					<img src="assets/_old/images/layers-4-db.png" class="layer"/>
+					<h4>postgresql</h4>
+				</span>
+            <span class="fragment">
+					<img src="assets/_old/images/layers-5-aws.png" class="layer"/>
+					<h4>4xT1 + 1 RDS</h4>
+				</span>
+            <span class="fragment">
+					<img src="assets/_old/images/layers-6-react.png" class="layer"/>
+					<h4>React UI</h4>
+				</span>
+            <span class="fragment">
+					<img src="assets/_old/images/layers-7-map.png" class="layer"/>
+					<h4>Map</h4>
+				</span>
+        </section>
+
+        <section id="slide-13">
+            <h1>@TODO: run tileserver!</h1>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+<script src="assets/_old/lodash.min.js"></script>
+<script src="assets/_old/d3.v3.min.js"></script>
+<script src="assets/_old/d3-selection-multi.v1.min.js"></script>
+<script src="assets/_old/d3.geo.projection.v0.min.js"></script>
+<script src="assets/_old/d3.geo.tile.min.js"></script>
+<script src="assets/_old/topojson.v1.min.js"></script>
+<script src="assets/_old/leaflet-src.js"></script>
+<script src="assets/_old/async.min.js"></script>
+
+<script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        history: true,
+        progress: false,
+        parallaxBackgroundImage: 'assets/images/background.png',
+        parallaxBackgroundSize: '3000px 1500px',
+        dependencies: [
+            /*{
+             src: 'socket.io/socket.io.js',
+             async: true
+             }, {
+             src: 'plugin/notes-server/client.js',
+             async: true
+             }, */
+            {
+                src: 'plugin/markdown/marked.js'
+            }, {
+                src: 'plugin/markdown/markdown.js'
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+
+    Reveal.addEventListener('fragmentshown', function(ev) {
+        console.log('fragmentshown', ev);
+        if (ev.fragment.dataset) {
+            //console.log(JSON.stringify(ev.fragment.dataset, false, 2));
+        }
+    });
+
+    Reveal.addEventListener('slidechanged', function(event) {
+        // console.log('slidechanged', event.previousSlide, event.currentSlide, event.indexh, event.indexv);
+        var nextId = event.currentSlide.id;
+        var prevId = event.previousSlide ? event.previousSlide.id : null;
+
+
+        var slidesScripts = [
+            'slide-projections-transform',
+            'slide-d3-firstmap',
+            'slide-d3-firstmap-tooltip',
+            'slide-d3-firstmap-proper-projection',
+            'slide-d3-visualize-data-poland',
+            'slide-d3-visualize-data-stores'
+        ];
+
+        if (!!~_.indexOf(slidesScripts, nextId)) {
+            appendScript(nextId + '.js');
+        }
+
+        // Add scripts when enter slide
+        /*switch (nextId) {
+         case 'slide-projections-transform':
+         appendScript('slide-projections-transform.js');
+         break;
+         case 'slide-d3-firstmap':
+         appendScript('slide-d3-firstmap.js');
+         break;
+         case 'slide-d3-firstmap-tooltip':
+         appendScript('slide-d3-firstmap-tooltip.js');
+         break;
+         default:
+         //					console.log('no fn found');
+         break;
+         }*/
+
+    });
+
+    function appendScript(fileName) {
+        var scriptElements = document.getElementsByTagName('script');
+
+        if (!_.find(scriptElements, function(script) {
+                    return !!~script.src.indexOf(fileName);
+                })) {
+            var scriptEl = document.createElement('script');
+            scriptEl.setAttribute('src', 'assets/' + fileName);
+            document.body.appendChild(scriptEl);
+        }
+    }
+</script>
+</body>
+
+</html>

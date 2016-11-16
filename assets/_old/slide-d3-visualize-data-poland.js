@@ -6,7 +6,6 @@ var width = 960,
 
 var center = [19.433036923499714, 52.10849565486152];
 var scale = 3025.2770864882386;
-var offset = [399.61664451339277, 242.03398194239685];
 
 var projection = d3.geo.mercator()
     .center(center)
@@ -18,17 +17,12 @@ var path = d3.geo.path()
 var tile = d3.geo.tile()
     .scale(projection.scale() * 2 * Math.PI)
     .translate(projection([0, 0]))
-    // .zoomDelta((window.devicePixelRatio || 1) - .5);
     .zoomDelta(1);
 
 
 var svg = d3.select("#slide-d3-visualize-data-poland").append("svg")
     .attr("width", width)
     .attr("height", height);
-
-var points = [
-    {name: 'wroclaw', point: [17.03333, 51.1]}
-];
 
 var tooltip = !d3.select(".tooltip").empty() ? d3.select(".tooltip") : d3.select("body")
         .append("div")
