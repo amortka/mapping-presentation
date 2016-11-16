@@ -191,6 +191,10 @@
         if (!_.isUndefined(data.scripted)) {
             appendScript(nextId);
         }
+
+        if (prevId && !_.isUndefined(event.previousSlide.dataset.scripted)) {
+            unloadScript(prevId);
+        }
     });
 
     function appendScript(fileName) {
@@ -217,6 +221,15 @@
             } catch (e) {
                 console.log('exception', e);
             }
+        }
+    }
+
+    function unloadScript(fileName) {
+        var moduleName = (['module', fileName].join('-')).replace(/(\-\w)/g, function(m){return m[1].toUpperCase();});
+        try {
+            window[moduleName].unload();
+        } catch (e) {
+            console.log('exception', e);
         }
     }
 </script>

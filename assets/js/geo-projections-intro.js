@@ -3,6 +3,8 @@ var moduleGeoProjectionsIntro = (function() {
     var width = 960,
         height = 500;
 
+    var interval;
+
     var options = [
         {name: "Aitoff", projection: d3.geoAitoff()},
         {name: "Albers", projection: d3.geoAlbers().scale(145).parallels([20, 50])},
@@ -57,8 +59,9 @@ var moduleGeoProjectionsIntro = (function() {
             o.projection.rotate([0, 0]).center([0, 0]);
         });
 
-        var interval = setInterval(loop, 1500),
-            i = 0,
+        interval = setInterval(loop, 1500);
+
+        var i = 0,
             n = options.length - 1;
 
         var projection = options[i].projection;
@@ -158,9 +161,15 @@ var moduleGeoProjectionsIntro = (function() {
         console.log('moduleGeoProjectionsIntro reset()');
     };
 
+    var unload = function() {
+        console.log('moduleGeoProjectionsIntro unloading ()');
+        clearInterval(interval);
+    };
+
     return {
         init: init,
-        reset: reset
+        reset: reset,
+        unload: unload
     }
 })();
 
