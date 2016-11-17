@@ -46,8 +46,8 @@
 
         <section id="geo-projections">
             <section id="geo-projections-intro" data-scripted>
-                <h1>why so important?</h1>
-                <div>{geo projections transformations}</div>
+                <h1>Geoprojection</h1>
+                <h2>why so important?</h2>
             </section>
             <section id="geo-projections-mercator">
                 <h1>mercator projection</h1>
@@ -76,13 +76,19 @@
                 <img src="assets/_old/Tissot_mercator.png"/>
             </section>
             <section id="geo-projections-mercator-distortions">
-
+                <h1>Mercator projection distortion</h1>
+                <img src="assets/images/mercator-greenland-vs-africa.png" />
+                <img class="fragment" src="assets/images/winkel_triple_projection.jpg" />
+                <img class="fragment" src="assets/images/1280px-tissot_indicatrix_world_map_winkel_tripel_proj.png" />
+                <a href="https://en.wikipedia.org/wiki/Winkel_tripel_projection" class="source">en.wikipedia.org/wiki/Winkel_tripel_projection</a>
             </section>
-            <section id="geo-projections-albers-usa">
-
+            <section id="geo-projections-albers-usa" data-scripted>
+                <h1>Choose right projection</h1>
+                <pre class="expand"><code>...</code></pre>
             </section>
-            <section id="geo-projections-mercator-usa">
-
+            <section id="geo-projections-mercator-usa" data-scripted>
+                <h1>so close...</h1>
+                <pre class="expand"><code>...</code></pre>
             </section>
             <section id="geo-convert-shp-geojson">
                 <h2>Convert data</h2>
@@ -91,7 +97,7 @@
             <section id="geo-convert-projection">
                 <h2>geojson default projection - WGS84</h2>
                 <p>Convert ETRS 1989 Poland CS2000 Zone 6 (EPSG:2177) to WGS84 datum</p>
-                <a href="http://www.spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6" class="source">www.spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6/</a>
+                <a href="http://www.spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6" class="source">spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6</a>
             </section>
         </section>
 
@@ -204,6 +210,8 @@
         if (!_.find(scriptElements, function(script) {
                     return !!~script.src.indexOf(fileName);
                 })) {
+            console.log('trying to load module:', moduleName);
+
             var scriptEl = document.createElement('script');
             scriptEl.setAttribute("type","text/javascript");
             scriptEl.setAttribute('src', 'assets/js/' + fileName + '.js');

@@ -1380,6 +1380,57 @@ section#geo-projections-intro .boundary {
   stroke: #fff;
   stroke-width: 0.5px; }
 
+section#geo-projections-mercator-distortions img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 70%; }
+
+section#geo-projections-mercator-distortions img:nth-of-type(1) {
+  top: 15%;
+  left: 10%; }
+
+section#geo-projections-mercator-distortions img:nth-of-type(2) {
+  top: 20%;
+  left: 15%; }
+
+section#geo-projections-mercator-distortions img:nth-of-type(3) {
+  top: 25%;
+  left: 20%; }
+
+/* -----------------------------------------------------------------------------
+--- EoF --- sections / slides
+---------------------------------------------------------------------------*/
+.reveal pre {
+  border-left: 4px solid #57ad68; }
+
+.reveal pre:before {
+  content: "";
+  background-color: #57ad68;
+  background-image: url("/assets/images/icon-code.svg");
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: -21px;
+  top: -20px;
+  color: white;
+  line-height: 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 100%;
+  font-weight: 700;
+  text-align: center; }
+
+pre.expand {
+  width: 100%; }
+  pre.expand code {
+    height: 150px;
+    -webkit-transition: height 0.5s ease-out;
+            transition: height 0.5s ease-out; }
+    pre.expand code:active, pre.expand code:focus, pre.expand code:hover {
+      height: 600px; }
+
 .tooltip {
   background: #FFF;
   color: #2c3e50;
