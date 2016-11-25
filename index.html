@@ -77,9 +77,9 @@
             </section>
             <section id="geo-projections-mercator-distortions">
                 <h1>Mercator projection distortion</h1>
-                <img src="assets/images/mercator-greenland-vs-africa.png" />
-                <img class="fragment" src="assets/images/winkel_triple_projection.jpg" />
-                <img class="fragment" src="assets/images/1280px-tissot_indicatrix_world_map_winkel_tripel_proj.png" />
+                <img src="assets/images/mercator-greenland-vs-africa.png"/>
+                <img class="fragment" src="assets/images/winkel_triple_projection.jpg"/>
+                <img class="fragment" src="assets/images/1280px-tissot_indicatrix_world_map_winkel_tripel_proj.png"/>
                 <a href="https://en.wikipedia.org/wiki/Winkel_tripel_projection" class="source">en.wikipedia.org/wiki/Winkel_tripel_projection</a>
             </section>
             <section id="geo-projections-albers-usa" data-scripted>
@@ -93,36 +93,41 @@
             <section id="geo-convert-shp-geojson">
                 <h1>Convert data</h1>
                 <h3>from shp to geojson</h3>
-                <a href="http://www.gdal.org/ogr2ogr.html"><img src="assets/images/gdal-ogr2ogr.png" /></a>
+                <a href="http://www.gdal.org/ogr2ogr.html"><img src="assets/images/gdal-ogr2ogr.png"/></a>
                 <a href="http://www.gdal.org/ogr2ogr.html" class="source">www.gdal.org/ogr2ogr.html</a>
             </section>
             <section id="geo-convert-shp-geojson-onlinee">
                 <h1>ogr2ogr online</h1>
-                <a href="https://ogre.adc4gis.com/"><img src="assets/images/ogr2ogr-online.png" /></a>
+                <a href="https://ogre.adc4gis.com/"><img src="assets/images/ogr2ogr-online.png"/></a>
                 <a href="https://ogre.adc4gis.com/" class="source">ogre.adc4gis.com</a>
             </section>
             <section id="geo-convert-projection">
                 <h2>geojson default projection - WGS84</h2>
                 <p>Convert ETRS 1989 Poland CS2000 Zone 6 (EPSG:2177) to WGS84 (EPSG:4326) datum</p>
-                <img src="assets/images/geoporta-wroclaw-osiedla.png" />
+                <img src="assets/images/geoporta-wroclaw-osiedla.png"/>
                 <a href="http://www.spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6" class="source">spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6</a>
             </section>
         </section>
 
         <section id="first-map">
-            <section id="first-map-world">
-              <h1>First map - world</h1>
+            <section id="first-map-world" data-scripted>
+                <h1>First map - world</h1>
+                <pre class="expand"><code>...</code></pre>
             </section>
-            <section id="first-map-json-csv">
-              <h1>Load data from json</h1>
+            <section id="first-map-world-zoom" data-scripted>
+                <h1>Zoom and drag behavior</h1>
+                <pre class="expand"><code>...</code></pre>
             </section>
-            <section id="first-map-zoom-drag">
-              <h1>Zoom and drag behavior</h1>
+            <section id="first-map-world-queue" data-scripted>
+                <h1>Load data from json&csv with queue</h1>
+                <pre class="expand"><code>...</code></pre>
             </section>
         </section>
 
         <section id="visualize-data">
-            <section id="visualize-data-points"></section>
+            <section id="visualize-data-points">
+                <h1>Visualize simple points, lines</h1>
+            </section>
             <section id="visualize-data-population"></section>
             <section id="visualize-data-areas"></section>
             <section id="visualize-data-choropleth"></section>
@@ -219,15 +224,16 @@
 
     function appendScript(fileName) {
         var scriptElements = document.getElementsByTagName('script');
-        var moduleName = (['module', fileName].join('-')).replace(/(\-\w)/g, function(m){return m[1].toUpperCase();});
+        var moduleName = (['module', fileName].join('-')).replace(/(\-\w)/g, function(m) {
+            return m[1].toUpperCase();
+        });
 
         if (!_.find(scriptElements, function(script) {
-                    return !!~script.src.indexOf(fileName);
+                    return new RegExp(fileName+'\.js$', 'i').test(script.src);
                 })) {
-            console.log('trying to load module:', moduleName);
 
             var scriptEl = document.createElement('script');
-            scriptEl.setAttribute("type","text/javascript");
+            scriptEl.setAttribute("type", "text/javascript");
             scriptEl.setAttribute('src', 'assets/js/' + fileName + '.js');
             scriptEl.onload = function() {
                 try {
@@ -238,6 +244,7 @@
             };
             document.body.appendChild(scriptEl);
         } else {
+            console.log('trying to reset module:', moduleName);
             try {
                 window[moduleName].reset();
             } catch (e) {
@@ -247,7 +254,9 @@
     }
 
     function unloadScript(fileName) {
-        var moduleName = (['module', fileName].join('-')).replace(/(\-\w)/g, function(m){return m[1].toUpperCase();});
+        var moduleName = (['module', fileName].join('-')).replace(/(\-\w)/g, function(m) {
+            return m[1].toUpperCase();
+        });
         try {
             window[moduleName].unload();
         } catch (e) {

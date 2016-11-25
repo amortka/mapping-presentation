@@ -13,8 +13,13 @@ var moduleGeoProjectionsIntro = (function() {
         console.log('moduleGeoProjectionsIntro reset()', count++);
     };
 
+    var unload = function() {
+        console.log('moduleGeoProjectionsIntro reset()', count++);
+    };
+
     return {
         init: init,
-        reset: reset
+        reset: reset,
+        unload: unload
     }
 })();

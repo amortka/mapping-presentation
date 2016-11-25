@@ -1398,6 +1398,68 @@ section#geo-projections-mercator-distortions img:nth-of-type(3) {
   top: 25%;
   left: 20%; }
 
+section#first-map-world .fill,
+section#first-map-world-zoom .fill,
+section#first-map-world-queue .fill {
+  fill: #fff; }
+
+section#first-map-world .land,
+section#first-map-world-zoom .land,
+section#first-map-world-queue .land {
+  fill: #34495e;
+  stroke: #2c3e50;
+  stroke-width: 0.5px; }
+
+section#first-map-world .stroke,
+section#first-map-world-zoom .stroke,
+section#first-map-world-queue .stroke {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px; }
+
+section#first-map-world .graticule,
+section#first-map-world-zoom .graticule,
+section#first-map-world-queue .graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: 0.5px;
+  stroke-opacity: 0.5; }
+
+section#first-map-world .route,
+section#first-map-world-zoom .route,
+section#first-map-world-queue .route {
+  fill: none;
+  stroke-width: 1.5px;
+  stroke-opacity: 1;
+  stroke-dasharray: 4 2; }
+
+section#first-map-world .route--data,
+section#first-map-world-zoom .route--data,
+section#first-map-world-queue .route--data {
+  stroke: red; }
+
+section#first-map-world .route--datum,
+section#first-map-world-zoom .route--datum,
+section#first-map-world-queue .route--datum {
+  stroke: #9b59b6;
+  stroke-width: 2px; }
+
+section#first-map-world .country,
+section#first-map-world-zoom .country,
+section#first-map-world-queue .country {
+  fill: #34495e;
+  stroke: #fff;
+  stroke-width: 0.1px; }
+  section#first-map-world .country:hover,
+  section#first-map-world-zoom .country:hover,
+  section#first-map-world-queue .country:hover {
+    fill: #3498db; }
+
+section#first-map-world .country.active,
+section#first-map-world-zoom .country.active,
+section#first-map-world-queue .country.active {
+  fill: #e67e22; }
+
 /* -----------------------------------------------------------------------------
 --- EoF --- sections / slides
 ---------------------------------------------------------------------------*/

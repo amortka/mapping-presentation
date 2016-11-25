@@ -1,168 +1,218 @@
 .reveal {
-    section {
-        height: 100%;
-        width: 100%;
-    }
-    .source {
-        font-size: 0.5em;
-        position: absolute;
-        bottom: 5%;
-        left: 0;
-    }
+  section {
+    height: 100%;
+    width: 100%;
+  }
+  .source {
+    font-size: 0.5em;
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+  }
 }
 
 /* -----------------------------------------------------------------------------
    --- sections / slides
    ---------------------------------------------------------------------------*/
 
-   section#title {
+section#title {
 
-   }
+}
 
-   section#geo-projections-mercator {
-       position: relative;
-       ol {
-           font-size: 0.8em;
-           display: inline-block;
-           width: 45%;
-           left: 0;
-       }
-       img {
-           width: 45%;
-           left: 0;
-       }
+section#geo-projections-mercator {
+  position: relative;
+  ol {
+    font-size: 0.8em;
+    display: inline-block;
+    width: 45%;
+    left: 0;
+  }
+  img {
+    width: 45%;
+    left: 0;
+  }
 
-   }
+}
 
-   section#geo-projections-intro {
-       #projection-menu {
-           position: absolute;
-           right: 10px;
-           top: 10px;
-       }
-       .stroke {
-           fill: none;
-           stroke: #000;
-           stroke-width: 3px;
-       }
-       .fill {
-           fill: #fff;
-       }
-       .graticule {
-           fill: none;
-           stroke: #777;
-           stroke-width: 0.5px;
-           stroke-opacity: 0.5;
-       }
-       .land {
-           fill: #222;
-       }
-       .boundary {
-           fill: none;
-           stroke: #fff;
-           stroke-width: 0.5px;
-       }
-   }
+section#geo-projections-intro {
+  #projection-menu {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+  .stroke {
+    fill: none;
+    stroke: #000;
+    stroke-width: 3px;
+  }
+  .fill {
+    fill: #fff;
+  }
+  .graticule {
+    fill: none;
+    stroke: #777;
+    stroke-width: 0.5px;
+    stroke-opacity: 0.5;
+  }
+  .land {
+    fill: #222;
+  }
+  .boundary {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 0.5px;
+  }
+}
 
-   section#geo-projections-mercator-distortions {
-        img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            max-width: 70%;
-        }
+section#geo-projections-mercator-distortions {
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 70%;
+  }
 
-       @for $i from 1 through 3 {
-           img:nth-of-type(#{$i}) {
-               top: (10 + $i*5) * 1%;
-               left: (5 + $i*5) * 1%;
-           }
-       }
+  @for $i from 1 through 3 {
+    img:nth-of-type(#{$i}) {
+      top: (10 + $i*5) * 1%;
+      left: (5 + $i*5) * 1%;
+    }
+  }
 
-   }
+}
+
+section#first-map-world,
+section#first-map-world-zoom,
+section#first-map-world-queue {
+  .fill {
+    fill: #fff;
+  }
+  .land {
+    fill: #34495e;
+    stroke: #2c3e50;
+    stroke-width: 0.5px;
+  }
+  .stroke {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2px;
+  }
+  .graticule {
+    fill: none;
+    stroke: #777;
+    stroke-width: 0.5px;
+    stroke-opacity: 0.5;
+  }
+  .route {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke-opacity: 1;
+    stroke-dasharray: 4 2;
+  }
+  .route--data {
+    stroke: red;
+  }
+  .route--datum {
+    stroke: #9b59b6;
+    stroke-width: 2px;
+  }
+  .country {
+    fill: #34495e;
+    stroke: #fff;
+    stroke-width: 0.1px;
+    &:hover {
+      fill: #3498db;
+    }
+  }
+  .country.active {
+    fill: #e67e22;
+  }
+}
 
 /* -----------------------------------------------------------------------------
 --- EoF --- sections / slides
 ---------------------------------------------------------------------------*/
 
 .reveal pre {
-    border-left: 4px solid #57ad68;
+  border-left: 4px solid #57ad68;
 }
 
 .reveal pre:before {
-    content: "";
-    background-color: #57ad68;
-    background-image: url('/assets/images/icon-code.svg');
-    background-size: 20px;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: absolute;
-    left: -21px;
-    top: -20px;
-    color: white;
-    line-height: 38px;
-    width: 38px;
-    height: 38px;
-    border-radius: 100%;
-    font-weight: 700;
-    text-align: center;
+  content: "";
+  background-color: #57ad68;
+  background-image: url('/assets/images/icon-code.svg');
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: -21px;
+  top: -20px;
+  color: white;
+  line-height: 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 100%;
+  font-weight: 700;
+  text-align: center;
 }
 
-
 pre.expand {
-    width: 100%;
-    code {
-        height: 150px;
-        transition: height 0.5s ease-out;
-        &:active,
-        &:focus,
-        &:hover {
-            height: 600px;
-        }
+  width: 100%;
+  code {
+    height: 150px;
+    transition: height 0.5s ease-out;
+    &:active,
+    &:focus,
+    &:hover {
+      height: 600px;
     }
+  }
 }
 
 .tooltip {
-    background: #FFF;
-    color: #2c3e50;
-    font-family: "Source Sans Pro", Helvetica, sans-serif;
-    font-weight: 700;
-    padding: 0.2em;
-    border-radius: 0.2em;
+  background: #FFF;
+  color: #2c3e50;
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-weight: 700;
+  padding: 0.2em;
+  border-radius: 0.2em;
 }
+
 /* -----------------------------------------------------------------------------
    --- utils
    ---------------------------------------------------------------------------*/
 .reveal {
-    .text-left {
-        text-align: left;
-    }
-    .text-center {
-        text-align: center;
-    }
-    .text-right {
-        text-align: right;
-    }
-    .text-light,
-    h1.text-light,
-    h2.text-light,
-    h3.text-light,
-    h4.text-light,
-    h5.text-light,
-    h6.text-light {
-        font-weight: 200;
-    }
+  .text-left {
+    text-align: left;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .text-light,
+  h1.text-light,
+  h2.text-light,
+  h3.text-light,
+  h4.text-light,
+  h5.text-light,
+  h6.text-light {
+    font-weight: 200;
+  }
 }
+
 /* -----------------------------------------------------------------------------
    --- fix for leaflet inside .reveal
    ---------------------------------------------------------------------------*/
 .reveal .leaflet-container img {
-    max-width: none;
-    max-height: none;
+  max-width: none;
+  max-height: none;
 }
+
 .reveal section .leaflet-container img {
-    margin: inherit;
-    background: none;
-    border: none;
-    box-shadow: none;
+  margin: inherit;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
