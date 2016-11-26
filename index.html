@@ -125,8 +125,8 @@
         </section>
 
         <section id="visualize-data">
-            <section id="visualize-data-points">
-                <h1>Visualize simple points, lines</h1>
+            <section id="visualize-data-points" data-scripted>
+                <h1>Visualize simple points</h1>
             </section>
             <section id="visualize-data-population"></section>
             <section id="visualize-data-areas"></section>
@@ -170,6 +170,7 @@
 <script src="assets/js/lib/d3-transition.v1.min.js"></script>
 <script src="assets/js/lib/d3-geo.v1.min.js"></script>
 <script src="assets/js/lib/d3-geo-projection.v1.min.js"></script>
+<script src="assets/js/lib/d3-ease.v1.min.js"></script>
 
 <script>
     Reveal.initialize({
@@ -236,6 +237,7 @@
             scriptEl.setAttribute("type", "text/javascript");
             scriptEl.setAttribute('src', 'assets/js/' + fileName + '.js');
             scriptEl.onload = function() {
+                console.log('trying to init module:', moduleName);
                 try {
                     window[moduleName].init();
                 } catch (e) {
