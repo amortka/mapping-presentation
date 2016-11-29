@@ -1460,11 +1460,38 @@ section#first-map-world-zoom .country.active,
 section#first-map-world-queue .country.active {
   fill: #e67e22; }
 
+section#d3-leaflet-path .info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color: #777;
+  min-width: 200px; }
+
+section#d3-leaflet-path .info h4 {
+  margin: 0 0 5px;
+  color: #777; }
+
+section#d3-leaflet-path #d3-leaflet-path-map {
+  width: 960px;
+  height: 500px; }
+  section#d3-leaflet-path #d3-leaflet-path-map .state {
+    fill-opacity: 0.5;
+    stroke: #2980b9;
+    stroke-width: 1.5px; }
+  section#d3-leaflet-path #d3-leaflet-path-map .state:hover {
+    fill-opacity: .9; }
+
 /* -----------------------------------------------------------------------------
 --- EoF --- sections / slides
 ---------------------------------------------------------------------------*/
 .reveal pre {
   border-left: 4px solid #57ad68; }
+
+.reveal pre + pre {
+  margin-top: 40px; }
 
 .reveal pre:before {
   content: "";
@@ -1483,6 +1510,9 @@ section#first-map-world-queue .country.active {
   border-radius: 100%;
   font-weight: 700;
   text-align: center; }
+
+.reveal pre code {
+  padding-left: 20px !important; }
 
 pre.expand {
   width: 100%; }
