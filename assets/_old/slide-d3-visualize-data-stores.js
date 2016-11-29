@@ -124,7 +124,6 @@
     }
 
     function colorize(name, gradient) {
-
         return _.find(stores, {name: name}).color || 'black';
     }
 

@@ -51,7 +51,7 @@ var moduleVisualizeDataChoropleth = (function() {
         .attr('class', 'caption')
         .attr('x', x.range()[0])
         .attr('y', -6)
-        .attr('fill', '#000')
+        .attr('fill', '#fff')
         .attr('text-anchor', 'start')
         .attr('font-weight', 'bold')
         .text('Unemployment rate');

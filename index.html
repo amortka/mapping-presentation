@@ -413,11 +413,13 @@ function makeMap(error, geojson, cities) {
 }
 </code></pre>
             </section>
-            <section id="visualize-data-population"></section>
-            <section id="visualize-data-areas"></section>
-            <section id="visualize-data-choropleth"></section>
-            <section id="visualize-data-voronoi"></section>
-            <section id="visualize-data-animate-path"></section>
+            <section id="visualize-data-choropleth" data-scripted>
+              <h1>Choropleth</h1>
+            </section>
+            <section id="visualize-data-voronoi" data-scripted>
+              <h1>Voronoi</h1>
+
+            </section>
         </section>
 
         <section id="d3-leaflet">
@@ -779,7 +781,7 @@ d3.geo.path -&gt; d3.geoPath
                 <h1>&infin;</h1>
                 <button id="download-svg">download svg</button>
             </section>
-            <section id="d3-demos-travel-world">
+            <section id="d3-demos-travel-world" data-scripted>
                 <h1>80 days around the world</h1>
             </section>
         </section>
@@ -804,6 +806,7 @@ d3.geo.path -&gt; d3.geoPath
 <script src="assets/js/lib/d3-ease.v1.min.js"></script>
 <script src="assets/js/lib/d3.geo.tile.min.js"></script>
 <script src="assets/js/lib/d3-selection-multi.v1.min.js"></script>
+<script src="assets/js/lib/d3-scale-chromatic.v1.min.js"></script>
 
 <script>
     Reveal.initialize({
