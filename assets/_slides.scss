@@ -129,6 +129,39 @@ section#first-map-world-queue {
   }
 }
 
+section#d3-leaflet-path {
+
+  .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color: #777;
+    min-width: 200px;
+  }
+  .info h4 {
+    margin: 0 0 5px;
+    color: #777;
+  }
+
+  #d3-leaflet-path-map {
+    width: 960px;
+    height: 500px;
+
+    .state {
+      fill-opacity: 0.5;
+      stroke: #2980b9;
+      stroke-width: 1.5px;
+    }
+
+    .state:hover {
+      fill-opacity: .9;
+    }
+  }
+}
+
 /* -----------------------------------------------------------------------------
 --- EoF --- sections / slides
 ---------------------------------------------------------------------------*/
@@ -136,7 +169,9 @@ section#first-map-world-queue {
 .reveal pre {
   border-left: 4px solid #57ad68;
 }
-
+.reveal pre+pre {
+  margin-top: 40px;
+}
 .reveal pre:before {
   content: "";
   background-color: #57ad68;
@@ -154,6 +189,10 @@ section#first-map-world-queue {
   border-radius: 100%;
   font-weight: 700;
   text-align: center;
+}
+
+.reveal pre code {
+  padding-left: 20px !important;
 }
 
 pre.expand {

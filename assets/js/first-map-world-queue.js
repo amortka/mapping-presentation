@@ -18,20 +18,6 @@ var moduleFirstMapWorldQueue = (function() {
     var path = d3.geoPath()
         .projection(projection);
 
-    var startPoint = [51.107885, 17.038538].reverse();
-    var endPoints = [
-        [40.712784, -74.005941],
-        [35.689487, 139.691706],
-        [19.432608, -99.133208],
-        [-33.868820, 151.209296],
-        [51.507351, -0.127758],
-        [47.606209, -122.332071],
-        [24.383023, 54.490128],
-        [-27.030994, -70.158691]
-    ].map((p) => p.reverse());
-
-
-
     var zoom = d3.zoom()
         .scaleExtent([0.5, 10])
         .on('zoom', zoomed);

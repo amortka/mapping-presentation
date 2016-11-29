@@ -3,18 +3,16 @@
 
 'use strict';
 var moduleGeoProjectionsIntro = (function() {
-    var count = 0;
-
     var init = function() {
         console.log('moduleGeoProjectionsIntro init()');
     };
 
     var reset = function() {
-        console.log('moduleGeoProjectionsIntro reset()', count++);
+        console.log('moduleGeoProjectionsIntro reset()');
     };
 
     var unload = function() {
-        console.log('moduleGeoProjectionsIntro reset()', count++);
+        console.log('moduleGeoProjectionsIntro unload()');
     };
 
     return {
