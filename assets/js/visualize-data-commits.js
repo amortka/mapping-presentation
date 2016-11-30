@@ -144,6 +144,9 @@ var moduleVisualizeDataCommits = (function() {
                 .on('mouseout', hideTooltip)
                 .transition()
                 .duration(750)
+                .delay(() => {
+                    return d3.randomUniform(1, 10)() * 100;
+                })
                 .attrs({
                     y: function(d) {
                         return days ? (d.day - 1) * gridSize : 0;
