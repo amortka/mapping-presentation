@@ -133,6 +133,24 @@ section#visualize-data-choropleth {
   }
 }
 
+section#visualize-data-commits {
+    svg {
+        background: #FFF;
+    }
+
+    text {
+        font-size: 9pt;
+        font-family: Consolas, courier;
+        fill: #2c3e50;
+    }
+
+    rect.block {
+        stroke: #FAFAFA;
+        stroke-width: 2px;
+        cursor: pointer;
+    }
+}
+
 section#d3-leaflet-path {
     .info {
         padding: 6px 8px;
