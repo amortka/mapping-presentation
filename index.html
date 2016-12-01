@@ -30,20 +30,6 @@
             <h3 class="text-left text-light">basic ideas to draw map and animate things!</h3>
         </section>
 
-        <!--<section id="agenda">-->
-            <!--<h1>Agenda</h1>-->
-            <!--<ul>-->
-                <!--<li>geo projections</li>-->
-                <!--<li>geojson vs toposjon</li>-->
-                <!--<li>d3 data vs datum</li>-->
-                <!--<li>simple map</li>-->
-                <!--<li>d3 load csv</li>-->
-                <!--<li>visualize data on map</li>-->
-                <!--<li>d3 as overlay for leaflet</li>-->
-                <!--<li>animations in d3</li>-->
-            <!--</ul>-->
-        <!--</section>-->
-
         <section id="geo-projections">
             <section id="geo-projections-intro" data-scripted>
                 <h1>Geoprojection</h1>
@@ -84,11 +70,101 @@
             </section>
             <section id="geo-projections-albers-usa" data-scripted>
                 <h1>Choose right projection</h1>
-                <pre class="expand"><code>...</code></pre>
+                <pre class="expand"><code>var width = document.getElementById('geo-projections-albers-usa').clientWidth * 0.8,
+    height = 500;
+
+var fill = d3.scaleLog()
+    .domain([10, 500])
+    .range(["#fff", "#e67e22"]);
+
+var path = d3.geoPath();
+
+var svg = d3.select("#geo-projections-albers-usa").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("/assets/data/us-states.geo.json", function(error, geojson) {
+    if (error) throw error;
+
+    var projection = d3.geoAlbersUsa()
+        .translate([width / 2, height / 2])
+        .scale([600]);
+
+    var path = d3.geoPath()
+        .projection(projection);
+
+    var group = svg.append("g")
+        .selectAll('path')
+        .data(geojson.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style("fill", function(d) {
+            return fill(path.area(d));
+        });
+});
+                </code></pre>
             </section>
             <section id="geo-projections-mercator-usa" data-scripted>
                 <h1>so close...</h1>
-                <pre class="expand"><code>...</code></pre>
+                <pre class="expand"><code>var slideContainer = 'geo-projections-mercator-usa';
+
+var width = document.getElementById(slideContainer).clientWidth * 0.8,
+    height = 500;
+
+var fill = d3.scaleLog()
+    .domain([10, 500])
+    .range(["#fff", "#e67e22"]);
+
+var svg = d3.select('#' + slideContainer).append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("/assets/data/us-states.geo.json", function(error, geojson) {
+    if (error) throw error;
+
+    var center = d3.geoCentroid(geojson);
+    var scale = 1000;
+    var offset = [width / 2, height / 2];
+    var projection = d3.geoMercator().scale(scale).center(center)
+        .translate(offset);
+
+    var path = d3.geoPath().projection(projection);
+
+    var bounds = path.bounds(geojson);
+    var hscale = scale * width / (bounds[1][0] - bounds[0][0]);
+    var vscale = scale * height / (bounds[1][1] - bounds[0][1]);
+    scale = (hscale < vscale) ? hscale : vscale;
+    offset = [width - (bounds[0][0] + bounds[1][0]) / 2,
+        height - (bounds[0][1] + bounds[1][1]) / 2];
+
+    // new projection
+    projection = d3.geoMercator().center(center)
+        .scale(scale).translate(offset);
+    path = path.projection(projection);
+
+    // adjust projection
+    bounds = path.bounds(geojson);
+    offset[0] = offset[0] + (width - bounds[1][0] - bounds[0][0]) / 2;
+    offset[1] = offset[1] + (height - bounds[1][1] - bounds[0][1]) / 2;
+
+    projection = d3.geoMercator().center(center)
+        .scale(scale).translate(offset);
+    path = path.projection(projection);
+
+
+    var path = d3.geoPath()
+        .projection(projection);
+
+    var group = svg.append("g")
+        .selectAll('path')
+        .data(geojson.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style("fill", function(d) {
+            return fill(path.area(d));
+        });
+});
+                </code></pre>
             </section>
             <section id="geo-convert-shp-geojson">
                 <h1>Convert data</h1>
@@ -104,8 +180,8 @@
             <section id="geo-convert-projection">
                 <h2>geojson default projection - WGS84</h2>
                 <p>Convert ETRS 1989 Poland CS2000 Zone 6 (EPSG:2177) to WGS84 (EPSG:4326) datum</p>
-                <img src="assets/images/geoporta-wroclaw-osiedla.png"/>
-                <a href="http://www.spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6" class="source">spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6</a>
+                <a href="http://www.geoportal.wroclaw.pl/osiedla/" target="_blank"><img src="assets/images/geoporta-wroclaw-osiedla.png" /></a>
+                <a href="http://www.spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6" class="source" target="_blank">spatialreference.org/ref/epsg/etrs89-poland-cs2000-zone-6</a>
             </section>
         </section>
 
@@ -315,6 +391,51 @@ function makeMap(err, world, countries) {
         </section>
 
         <section id="visualize-data">
+            <section id="visualize-easing" data-scripted>
+                <h1>Easing types</h1>
+                <ul class="source">
+                    <li><a href="https://github.com/d3/d3-ease" target="_blank">https://github.com/d3/d3-ease</a></li>
+                    <li><a href="https://github.com/d3/d3-transition" target="_blank" class="source">https://github.com/d3/d3-transition</a></li>
+                    <li><a href="https://github.com/d3/d3-scale" target="_blank" class="source">https://github.com/d3/d3-scale</a></li>
+                </ul>
+            </section>
+            <section id="visualize-transition-events" data-scripted>
+                <h1>Transition events</h1>
+                <pre class="expand"><code>dots.transition()
+    .duration(1000)
+    .ease(d3.easePolyOut)
+    .delay(function() {
+        return random(0, 10) * 100;
+    })
+    .attr('cx', width - margin - r)
+    .attr('fill', 'blue')
+    .call(endall, function() {
+            d3.select(this)
+                .attr('fill', 'red');
+        },
+        function() {
+            dots.attr('fill', 'green');
+        });
+
+function endall(transition, cb, cbAll) {
+    if (!cb) cb = function() {};
+    if (!cbAll) cbAll = function() {};
+
+    if (transition.size() === 0) {
+        callback();
+    }
+
+    var n = 0;
+    transition
+        .each(function() {
+            ++n;
+        })
+        .on('end', function() {
+            cb.apply(this);
+            if (!--n) cbAll.apply(this, arguments);
+        });
+        }</code></pre>
+            </section>
             <section id="visualize-data-points" data-scripted>
                 <h1>Visualize simple points</h1>
                 <pre class="expand"><code>var width = 960,

@@ -21,6 +21,14 @@ var moduleVisualizeDataPoints = (function() {
         .attr("width", width)
         .attr("height", height);
 
+    var tooltip = d3.select('body')
+        .append('div')
+        .style('position', 'absolute')
+        .style('z-index', '10')
+        .style('visibility', 'hidden')
+        .attr('class', 'tooltip')
+        .text('');
+
     var init = function() {
         console.log('moduleVisualizeDataPoints init()');
 
@@ -82,6 +90,9 @@ var moduleVisualizeDataPoints = (function() {
                     return projection(center)[1];// + d3.randomUniform(-10, 10)() * 20;
                 })
                 .attr('r', '1')
+                .on('mouseenter', showTooltip)
+                .on('mousemove', showTooltip)
+                .on('mouseout', hideTooltip)
                 .transition()
                 .duration(1200)
                 .ease(d3.easeBounceOut)
@@ -100,6 +111,17 @@ var moduleVisualizeDataPoints = (function() {
                     return fill(d.population);
                 });
 
+        }
+
+        function showTooltip(d) {
+            tooltip.style('top', (event.pageY - 10) + 'px')
+                .style('left', (event.pageX + 10) + 'px')
+                .style('visibility', 'visible')
+                .text(`${d.city}, ${d.voivodeship}: ${d.population}`);
+        }
+
+        function hideTooltip() {
+            tooltip.style('visibility', 'hidden');
         }
     };
 
